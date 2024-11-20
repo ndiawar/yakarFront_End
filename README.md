@@ -48,6 +48,13 @@ Ce projet a pour objectif de développer une plateforme de contrôle de la temp�
 - Angular CLI (version 18.2.12)
 - MongoDB
 
+
+👥 Contributeurs
+Mouhamadou Moustapha Fa - Développeur
+Ndiawar Diop - Développeur
+Khalifa Ababacar Gaye - Développeur
+Fatou Diéye - Développeur
+
 ### Cloner le projet :
 
 ```bash
@@ -62,69 +69,3 @@ bash
 Copier le code
 ng serve
 Naviguer vers http://localhost:4200/ pour voir l'application en action.
-
-📝 Utilisation
-Pour l'utilisateur simple :
-
-Accédez à l'interface principale pour voir la température et l'humidité en temps réel.
-Consultez l'historique des mesures de température et d'humidité collectées.
-Pour l'administrateur :
-
-Accédez au tableau de bord pour gérer les utilisateurs, contrôler le système de ventilation et visualiser les historiques des mesures.
-🔧 Fonctionnalités Backend
-API pour récupérer les données de température et d'humidité :
-
-Endpoint : /api/temperature
-Méthode : GET
-Retourne la température actuelle, l'humidité, et les statistiques (moyenne, historique).
-Gestion des utilisateurs (admin seulement) :
-
-Créer, modifier, et supprimer des utilisateurs via l'interface admin.
-Contrôler les rôles des utilisateurs.
-Contrôle de la ventilation :
-
-Allumer ou éteindre le ventilateur à partir de l'interface ou d'une télécommande (via WebSocket).
-📐 Architecture du projet
-Frontend : Angular gère l'interface utilisateur.
-Backend : Node.js avec Express pour gérer les API.
-Base de données : MongoDB pour stocker les données de température et d'humidité collectées.
-IoT : Un microcontrôleur pour gérer les capteurs de température et d'humidité, et envoyer les données au serveur via WebSocket.
-💡 Instructions supplémentaires
-Générer un nouveau composant :
-bash
-Copier le code
-ng generate component component-name
-Lancer les tests unitaires :
-bash
-Copier le code
-ng test
-Lancer les tests end-to-end :
-bash
-Copier le code
-ng e2e
-Compiler le projet pour la production :
-bash
-Copier le code
-ng build
-Les fichiers compilés seront stockés dans le dossier dist/.
-
-📈 Gestion du projet
-Le projet suit une méthode agile avec des itérations courtes et des mises à jour régulières. Le tableau Trello est utilisé pour la gestion des tâches et la coordination de l'équipe. Vous pouvez consulter le tableau Trello ici.
-
-📑 Livrables attendus
-Mindmap de l’application
-Maquette de l’application
-Tableau Trello avec les tâches
-Circuit électronique correctement câblé
-Code source sur GitHub
-Documentation technique
-Présentation Powerpoint
-🔗 Liens utiles
-GitHub - Yakar IoT
-Documentation
-Trello - Tableau de gestion
-👥 Contributeurs
-Mouhamadou Moustapha Fa - Développeur
-Ndiawar Diop - Développeur
-Khalifa Ababacar Gaye - Développeur
-Fatou Diéye - Développeur
