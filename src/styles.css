@@ -1,1 +1,171 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles de base pour le body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Fond clair par défaut */
+  transition: background-color 0.3s, color 0.3s; /* Transition douce pour le changement de thème */
+}
+
+/* Thème sombre */
+body.dark-theme {
+  background-color: #111015;  /* Fond sombre */
+  color: #ffffff;  /* Texte blanc */
+}
+
+/* Header */
+.navbar {
+  background-color: #ffffff; /* Fond clair par défaut */
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s;  /* Transition pour un changement en douceur */
+}
+
+body.dark-theme .navbar {
+  background-color: #111015;  /* Fond sombre pour le header */
+  border-bottom: 1px solid #333;
+}
+
+.dropdown-menu {
+  background-color: #ffffff;
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+body.dark-theme .dropdown-menu {
+  background-color: #111015;  /* Fond sombre pour les menus */
+  color: #ffffff;  /* Texte clair */
+}
+
+.dropdown-item {
+  color: #333;
+}
+
+body.dark-theme .dropdown-item {
+  color: #ffffff;  /* Texte clair en mode sombre */
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+body.dark-theme .dropdown-item:hover {
+  background-color: #444;  /* Fond sombre sur hover */
+}
+/* Thème sombre */
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Logo */
+body.dark-theme .logo-image {
+  content: url('/assets/images/logo_dark.png');
+}
+
+body:not(.dark-theme) .logo-image {
+  content: url('/assets/images/logo.png');
+}
+
+/* Liens */
+a {
+  color: #00FF47;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+body.dark-theme a {
+  color: #17fc58; /* Couleur de lien en mode sombre */
+}
+
+body.dark-theme a:hover {
+  color: #ffffff;  /* Lien actif en mode sombre */
+}
+
+/* Conteneur de l'application */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Menu */
+.menu {
+  background-color: #ffffff;
+  padding: 1rem;
+  transition: background-color 0.3s;
+}
+
+body.dark-theme .menu {
+  background-color: #111015;  /* Fond sombre pour le menu */
+}
+
+/* Menu List */
+.menu ul {
+  list-style: none;
+  display: flex;
+}
+
+.menu ul li {
+  margin-right: 20px;
+}
+
+.menu ul li a {
+  color: #333;
+}
+
+body.dark-theme .menu ul li a {
+  color: #ffffff; /* Liens clairs dans le menu sombre */
+}
+
+/* Header spécifique */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+header .logo img {
+  width: 100px;
+}
+
+header .user-profile {
+  display: flex;
+  align-items: center;
+}
+
+header .user-profile .user-icon {
+  width: 40px;
+  margin-left: 10px;
+}
+
+
+
+/* Contenu */
+.content {
+  flex-grow: 1; /* Prend tout l'espace restant, poussant ainsi le footer en bas */
+  padding: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: #202121; /* Fond sombre pour le footer */
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  margin-top: auto; /* Assure que le footer est poussé en bas de la page */
+}
+
+body.dark-theme footer {
+  background-color: #111015;  /* Fond sombre pour le footer */
+  color: #ddd;  /* Texte plus clair */
+}

@@ -1,0 +1,40 @@
+<!-- Header Start -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <!-- Logo Section -->
+    <a class="navbar-brand" href="/">
+      <img 
+        [src]="isDarkMode ? '/assets/images/logo_dark.png' : '/assets/images/logo.png'" 
+        alt="Logo" 
+        class="logo-image">
+    </a>
+    
+    <!-- Navigation Section (partie utilisateur et mode toggle) -->
+    <div class="ms-auto d-flex align-items-center">
+      <!-- Mode Toggle Section (aligné à droite) -->
+      <div class="mode d-flex align-items-center px-3" (click)="toggleTheme()">
+        <i id="themeIcon" class="bi" [ngClass]="isDarkMode ? 'bi-moon-fill' : 'bi-sun-fill'"></i>
+        <span class="ms-2"></span>
+      </div>
+      
+      <!-- User Profile and Dropdown -->
+      <div class="dropdown d-flex align-items-center">
+        <a class="d-flex align-items-center text-decoration-none" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="/assets/images/avatar.png" alt="User Avatar" class="rounded-circle user-avatar">
+          <div>
+            <span class="d-block" [ngClass]="isDarkMode ? '' : 'text-dark'">Emay Walter</span>
+            <small [ngClass]="isDarkMode ? 'text-white' : 'text-dark'">Admin</small>
+          </div>
+        </a>
+        
+        <!-- Dropdown Menu -->
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Header End -->

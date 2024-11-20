@@ -1,0 +1,68 @@
+body {
+    background-color: #000000;
+  }
+  
+  input::placeholder {
+    color: #cccccc !important;
+  }
+  
+  input:focus {
+    border-color: #00FF47 !important;
+    box-shadow: 0 0 5px #00FF47 !important;
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .eye {
+    right: 20px; 
+    top: 50%; 
+    transform: translateY(-50%);
+
+  }
+  .yakarlogin {
+    max-width: 500px;
+  }
+
+  .texte-success{
+    color: #00FF47;
+    font-size: 20px;
+  }
+
+  .submit {
+    background-color: #00FF47;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+
+  .submit:hover {
+    background-color: #00cc33;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Style des champs de code */
+.code-input {
+    width: 60px; /* Largeur fixe pour chaque champ */
+    height: 60px; /* Hauteur égale pour former un carré */
+    border-radius: 50%; /* Cercle parfait */
+    border: 2px solid #00FF47; /* Bordure verte */
+    font-size: 2rem; /* Taille de texte adaptée */
+    font-weight: bold;
+    background-color: white; /* Fond blanc */
+    color: black; /* Texte noir */
+    text-align: center; /* Centrer le texte */
+  }
+  
+  /* Espace entre les champs */
+  .code-input:focus {
+    outline: none; /* Supprimer l'effet de focus par défaut */
+    border-color: #00c853; /* Couleur du focus */
+  }
+  

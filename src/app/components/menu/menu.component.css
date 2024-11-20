@@ -1,0 +1,41 @@
+/* Style de base du menu */
+nav.menu {
+    background-color: #202121; /* Fond sombre pour le menu */
+    padding: 10px;
+    width: 100%;
+    display: flex; /* Pour aligner les éléments horizontalement */
+    justify-content: start; /* Centrer les éléments horizontalement */
+  }
+  
+  nav.menu ul {
+    list-style-type: none; /* Supprime les puces par défaut */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Aligne les éléments de manière horizontale */
+  }
+  
+  nav.menu li {
+    margin: 0 15px; /* Espacement horizontal entre les éléments */
+  }
+  
+  nav.menu a {
+    color: #00FF47; /* Couleur par défaut des liens */
+    text-decoration: none; /* Enlève le soulignement */
+    font-size: 16px; /* Taille du texte */
+    padding: 8px 15px; /* Espacement autour du texte */
+    border-radius: 4px; /* Coins arrondis des liens */
+    transition: all 0.3s ease; /* Animation fluide lors des changements */
+  }
+  
+  nav.menu a:hover {
+    background-color: rgba(0, 255, 71, 0.1); /* Légère couleur de fond au survol */
+    color: #00FF47; /* Couleur toujours la même au survol */
+  }
+  
+  /* Lien actif */
+  nav.menu a.active {
+    color: white; /* Couleur du lien actif */
+    border-bottom: 2px solid #00FF47; /* Bordure en bas du lien actif */
+    font-weight: bold; /* Texte en gras pour le lien actif */
+  }
+  

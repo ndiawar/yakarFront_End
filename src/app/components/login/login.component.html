@@ -1,0 +1,201 @@
+<div class="container-fluid vh-100 d-flex justify-content-center align-items-center bg-black text-white">
+    <div class="row w-75">
+      <!-- Section logo -->
+      <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+        <div class="logo mb-4">
+          <img src="assets/images/logo_dark.png" alt="Yakar Logo" class="img-fluid yakarlogin" />
+        </div>
+      </div>
+  
+      <!-- Section formulaire -->
+      <div class="col-md-6">
+        <!-- Navigation horizontale -->
+        <ul class="nav nav-tabs justify-content-center mb-4 border-0" id="connectionTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active texte-success"
+              id="email-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#email-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="email-tab-pane"
+              aria-selected="true"
+            >
+              Email & Mot de Passe
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link texte-success"
+              id="code-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#code-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="code-tab-pane"
+              aria-selected="false"
+            >
+              Code Secret
+            </button>
+          </li>
+        </ul>
+  
+        <!-- Contenu des onglets -->
+        <div class="tab-content" id="connectionTabsContent">
+          <!-- Onglet Email et Mot de Passe -->
+          <div
+            class="tab-pane fade show active"
+            id="email-tab-pane"
+            role="tabpanel"
+            aria-labelledby="email-tab"
+            tabindex="0"
+          >
+            <h1 class="texte-success fs-1 mb-4">Connexion</h1>
+            <p class="mb-4 text-start">Veuillez remplir vos informations ci-dessous</p>
+
+            <form #emailForm="ngForm">
+              <!-- Champ email -->
+              <div class="mb-5">
+                <div class="input-group">
+                  <span class="input-group-text bg-white text-success border-success">
+                    <i class="bi bi-envelope"></i>
+                  </span>
+                  <input
+                    type="email"
+                    class="form-control bg-white p-3 text-dark border-success"
+                    placeholder="E-mail"
+                    required
+                    [(ngModel)]="email"
+                    name="email"
+                    #emailInput="ngModel"
+                    (ngModelChange)="validateEmail()"
+                  />
+                </div>
+                <div
+                  *ngIf="emailTouched"
+                  class="mt-2"
+                  [class.text-danger]="!isEmailValid"
+                  [class.text-success]="isEmailValid"
+                >
+                  {{ isEmailValid ? 'Adresse email valide.' : 'Veuillez entrer une adresse email valide.' }}
+                </div>
+              </div>
+
+              <!-- Champ mot de passe -->
+              <div class="mb-3">
+                <div class="input-group">
+                  <span class="input-group-text bg-white text-success border-success">
+                    <i class="bi bi-lock"></i>
+                  </span>
+                  <input
+                    type="password"
+                    class="form-control bg-white p-3 text-dark border-success"
+                    placeholder="Mot de passe"
+                    required
+                    [(ngModel)]="password"
+                    name="password"
+                    #passwordInput="ngModel"
+                    (ngModelChange)="validatePassword()"
+                  />
+                </div>
+                <div
+                  *ngIf="passwordTouched"
+                  class="mt-2"
+                  [class.text-danger]="!isPasswordValid"
+                  [class.text-success]="isPasswordValid"
+                >
+                  {{ isPasswordValid
+                    ? 'Mot de passe valide.'
+                    : 'Le mot de passe doit contenir au moins 8 caractères, une majuscule et un caractère spécial.' }}
+                </div>
+              </div>
+
+              <!-- Bouton de connexion -->
+              <div class="d-flex justify-content-center align-items-center">
+                <button
+                  type="submit"
+                  class="submit btn btn-success w-50 py-2 fw-bold"
+                  [disabled]="!isEmailValid || !isPasswordValid"
+                  (click)="onEmailSubmit()"
+                >
+                  Se connecter
+                </button>
+              </div>
+            </form>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="code-tab-pane"
+            role="tabpanel"
+            aria-labelledby="code-tab"
+            tabindex="0"
+          >
+            <h1 class="texte-success fs-1 mb-4 text-center">Connexion</h1>
+            <p class="mb-4 text-center">Veuillez entrer votre code secret ci-dessous</p>
+            
+            <form (ngSubmit)="onSubmit()" #codeForm="ngForm">
+              <!-- Champ code secret (4 inputs) -->
+              <div class="d-flex justify-content-center gap-3 mb-3">
+                <input
+                  #input1
+                  type="text"
+                  maxlength="1"
+                  class="form-control text-center code-input"
+                  required
+                  (input)="onInput($event, input2)"
+                  (keydown)="allowOnlyNumbers($event)"
+                  [(ngModel)]="code[0]"
+                  name="code1"
+                  aria-label="Code chiffre 1"
+                />
+                <input
+                  #input2
+                  type="text"
+                  maxlength="1"
+                  class="form-control text-center code-input"
+                  required
+                  (input)="onInput($event, input3)"
+                  (keydown)="allowOnlyNumbers($event)"
+                  [(ngModel)]="code[1]"
+                  name="code2"
+                  aria-label="Code chiffre 2"
+                />
+                <input
+                  #input3
+                  type="text"
+                  maxlength="1"
+                  class="form-control text-center code-input"
+                  required
+                  (input)="onInput($event, input4)"
+                  (keydown)="allowOnlyNumbers($event)"
+                  [(ngModel)]="code[2]"
+                  name="code3"
+                  aria-label="Code chiffre 3"
+                />
+                <input
+                  #input4
+                  type="text"
+                  maxlength="1"
+                  class="form-control text-center code-input"
+                  required
+                  (input)="onInput($event, null)"
+                  (keydown)="allowOnlyNumbers($event)"
+                  [(ngModel)]="code[3]"
+                  name="code4"
+                  aria-label="Code chiffre 4"
+                />
+              </div>
+            
+              <!-- Message d'erreur -->
+              <div *ngIf="missingDigits > 0" class="text-danger text-center mb-3">
+                Il manque {{ missingDigits }} chiffre{{ missingDigits > 1 ? 's' : '' }}.
+              </div>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

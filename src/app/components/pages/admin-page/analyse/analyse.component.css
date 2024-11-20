@@ -1,0 +1,18 @@
+canvas {
+    width: 100% !important;
+    height: 400px !important;
+  }
+  .card-moyenne {
+    background-color: #2b2b2b;
+  }
+  .list-group {
+    background-color: #2b2b2b;
+  }
+  .list-group-item i {
+    margin-right: 10px;
+  }
+
+  h4 {
+    color: #00FF47;
+  }
+  

@@ -1,0 +1,81 @@
+.card {
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .bg-dark {
+    background-color: #2b2b2b !important;
+  }
+  
+  .text-white {
+    color: #fff !important;
+  }
+  
+  .main-card {
+    background-image: url('/assets/images/humide.png'); /* Remplacez 'background.jpg' par le chemin vers votre image */
+    background-size: cover; /* L'image couvre tout le conteneur */
+    background-position: center; /* Centrer l'image */
+    border: none;
+    border-radius: 10px;
+    min-height: 300px; /* Définissez une hauteur minimale */
+  }
+  
+  .main-card .card-body {
+    background: rgba(0, 0, 0, 0.425); /* Ajoute un effet d'ombre */
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card-body .d-flex p {
+    margin-right: 10px; /* Espacement entre les <p> */
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+  }
+  .highlight {
+    color: #17fc58; /* Couleur verte spécifique */
+    font-weight: bold; /* (Facultatif) Rendre le texte plus visible */
+  }
+  .card-body h6 {
+    font-size: 1rem; /* Taille pour le titre */
+  }
+  
+  .card-body .d-flex i {
+    font-size: 1.2rem; /* Taille des icônes */
+  }
+  
+  .card-body small {
+    font-size: 0.8rem; /* Taille pour le texte en petit */
+    color: #bbb; /* Couleur gris clair */
+  }
+  
+  .me-2 {
+    margin-right: 8px; /* Espacement à droite des icônes */
+  }
+  
+  .ms-2 {
+    margin-left: 8px; /* Espacement à gauche du texte en <small> */
+  }
+  .icon-green {
+    color: #17fc58; /* Couleur verte */
+    font-size: 1.2rem; /* Ajustez la taille si nécessaire */
+  }
+  
+  /* Changer la couleur de la case à cocher en rouge quand elle est cochée */
+.form-check-input:checked {
+    background-color: red;
+    border-color: red;
+}
+
+.form-check-input:focus {
+    border-color: red;
+    box-shadow: 0 0 0 0.25rem rgba(255, 0, 0, 0.25);
+}
+
+/* Espacement entre la case et l'icône + texte */
+.form-check-input {
+    margin-right: 8px; /* Espacement entre la case et l'icône */
+}
+
+/* Assurez-vous que l'icône et le texte sont alignés correctement */
+.d-flex {
+    display: flex;
+    align-items: center;
+}

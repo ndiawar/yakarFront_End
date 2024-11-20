@@ -1,0 +1,67 @@
+/* my-account.component.css */
+
+/* Profil image et texte */
+.profile-media {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-media img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .profile-media .media-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .profile-media .media-body span {
+    font-weight: bold;
+  }
+  
+  .profile-media .media-body p {
+    margin: 0;
+    color: gray;
+  }
+  
+  /* Menu déroulant de profil */
+  .profile-dropdown {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: none;
+  }
+  
+  .profile-dropdown li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .profile-dropdown li a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-dropdown li a app-feather-icons {
+    margin-right: 10px;
+  }
+  
+  /* Affichage du menu au survol */
+  .onhover-show-div {
+    display: block;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .onhover-show-div li:hover {
+    background-color: #f5f5f5;
+  }
+  

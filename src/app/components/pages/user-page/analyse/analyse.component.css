@@ -1,0 +1,13 @@
+
+  canvas {
+    margin-top: 20px;
+    border-radius: 10px; /* Coins arrondis */
+    background-color: #1e1e1e; /* Fond du graphique */
+    color: white; /* Texte blanc */
+
+  }
+
+  .chart-container {
+    height: 400px;
+    width: 100%;
+}

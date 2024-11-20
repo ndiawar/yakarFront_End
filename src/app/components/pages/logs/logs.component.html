@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 mt-5">
+        <div class="toolbar-container mb-2">
+          <!-- Recherche -->
+          <div class="search-container">
+            <input
+              type="text"
+              placeholder="🔍 Rechercher action..."
+              [(ngModel)]="searchTerm"
+              class="search-input"
+            />
+          </div>
+        </div>
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th (click)="sortTable('date')">Date</th>
+              <th (click)="sortTable('heure')">Heure</th>
+              <th (click)="sortTable('action')">Action</th>
+              <th (click)="sortTable('id_users')">Utilisateur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of paginatedLogs">
+              <td>{{ log.date | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ log.heure }}</td>
+              <td>{{ log.action }}</td>
+              <td>{{ log.id_users }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <nav aria-label="Pagination" class="pagination-container">
+          <ngb-pagination
+            [(page)]="currentPage"
+            [pageSize]="pageSize"
+            [collectionSize]="logs.length"
+            (pageChange)="updatePagination()"
+          ></ngb-pagination>
+        </nav>
+      </div>
+    </div>
+  </div>
+  

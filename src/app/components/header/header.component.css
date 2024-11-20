@@ -1,0 +1,64 @@
+/*======= Page Header css Start ======= */
+
+.logo-image {
+  width: 100px;
+}
+.user-avatar {
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+.mode {
+  cursor: pointer;
+  display: flex;
+  align-items: end;
+  color: white;
+}
+
+.mode:hover {
+  color: #f1f1f1;
+}
+
+/* Ensure that the profile image and theme toggle button are aligned */
+.navbar .ms-auto {
+  display: flex;
+  align-items: center;
+  position: relative; /* Ensure that items inside it are properly aligned */
+}
+
+/* Style pour l'icône de mode */
+.theme-icon {
+  font-size: 20px;
+  color: white;
+}
+
+/* Espace entre l'icône de mode et le texte */
+.theme-icon.sun {
+  color: black;
+}
+
+.theme-icon.moon {
+  color: white;
+}
+
+/* Alignement général des éléments à droite dans la navbar */
+.navbar .ms-auto {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Pour le bouton de bascule de mode */
+.mode {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 15px;  /* Espace entre le mode toggle et le profil */
+}
+
+/* Image de l'utilisateur */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
