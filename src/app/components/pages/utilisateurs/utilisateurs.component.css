@@ -298,6 +298,34 @@ td {
   background-color: #495057; /* Couleur légèrement plus claire au focus */
   box-shadow: 0 0 8px rgba(0, 255, 71, 0.6); /* Lumière verte */
 }
+/*Switch du role*/
+/* Par défaut : gris */
+.switch .slider {
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+/* Si "admin" (checked) : vert */
+.switch .slider.active {
+  background-color: #28a745;
+}
+
+/* Effet de transition */
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.switch input:checked + .slider {
+  background-color: #28a745; /* vert */
+}
 
 /* Style du sélecteur de filtre */
 .filter-container .filter-select {
@@ -337,6 +365,115 @@ td {
 .ajout-button:active {
   transform: scale(0.95); /* Effet de clic */
 }
+/*CSS Ajout utilisateur*/
+input::placeholder {
+  color: #cccccc !important;
+}
+
+input:focus {
+  border-color: #00FF47 !important;
+  box-shadow: 0 0 5px #00FF47 !important;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+.eye {
+  right: 20px; 
+  top: 50%; 
+  transform: translateY(-50%);
+
+}
+.yakarlogin {
+  max-width: 500px;
+}
+
+.texte-success{
+  color: #00FF47;
+  font-size: 20px;
+}
+
+.submit {
+  background-color: #00FF47;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submit:hover {
+  background-color: #00cc33;
+  color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.modal-dialog {
+  max-width: 100%; /* Ajustez le pourcentage pour agrandir ou réduire */
+  background-color: #000;
+}
+
+.modal-custom {
+  background-color: #000; /* Fond noir */
+  color: #fff; /* Texte blanc */
+  border-radius: 10px;
+}
+
+
+.bg-dark {
+  background-color: #000;
+}
+
+.logo-image {
+  max-width: 80%;
+  height: auto;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-header .btn-close {
+  color: #000000;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.input-group-text {
+  border-radius: 0;
+}
+
+/* Style du texte dans le formulaire */
+
+.modal-custom input::placeholder,
+.modal-custom select::placeholder,
+.modal-custom textarea::placeholder {
+  color: #aaa; /* Placeholder gris clair */
+}
+
+/* Style du bouton */
+button.btn-success {
+  background-color: #00ff00;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+button.btn-success:hover {
+  background-color: #00cc00;
+}
+.img-fluid {
+  max-width: 30%; 
+  height: auto; 
+  border: 1px solid #fff; 
+  padding: 5px;
+  }
 
 /* Responsive */
 @media (max-width: 768px) {

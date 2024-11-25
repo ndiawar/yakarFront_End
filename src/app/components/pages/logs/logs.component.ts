@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { LogsApiService } from '../../../services/logs-api.service';
 
 @Component({
   selector: 'app-logs',
@@ -10,32 +11,42 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './logs.component.html',
   styleUrls: ['./logs.component.css'],
 })
-export class LogsComponent {
-  logs = [
-    { _id: 1, date: new Date('2024-11-17'), heure: '12:30', action: 'Connexion réussie', id_users: 101 },
-    { _id: 2, date: new Date('2024-11-16'), heure: '14:15', action: 'Déconnexion', id_users: 102 },
-    { _id: 3, date: new Date('2024-11-16'), heure: '10:45', action: 'Modification profil', id_users: 101 },
-    { _id: 4, date: new Date('2024-11-15'), heure: '08:20', action: 'Connexion échouée', id_users: 103 },
-    { _id: 5, date: new Date('2024-11-15'), heure: '16:00', action: 'Suppression compte', id_users: 104 },
-  ];
+export class LogsComponent implements OnInit {
+  logs: any[] = []; // Liste complète des logs
+  paginatedLogs: any[] = []; // Logs paginés
+  currentPage = 1; // Page courante
+  pageSize = 5; // Nombre d'éléments par page
+  searchTerm = ''; // Filtre de recherche
+  sortKey = ''; // Clé de tri (date, heure, action, id_users)
+  sortOrder: 'asc' | 'desc' = 'asc'; // Ordre de tri
+  errorMessage = ''; // Message d'erreur (le cas échéant)
 
-  currentPage = 1;
-  pageSize = 5;
-  paginatedLogs = [...this.logs];
-  searchTerm = '';
-  sortKey = '';
-  sortOrder: 'asc' | 'desc' = 'asc';
+  constructor(private logsService: LogsApiService) {}
 
-  constructor() {
-    this.updatePagination();
+  async ngOnInit() {
+    try {
+      // Appel à l'API pour récupérer les logs
+      this.logs = await this.logsService.getAllLogs();
+      this.updatePagination(); // Mettre à jour la pagination avec les données récupérées
+    } catch (error) {
+      this.errorMessage = 'Impossible de récupérer les logs. Veuillez réessayer plus tard.';
+      console.error(this.errorMessage, error);
+    }
   }
 
+  /**
+   * Mettre à jour les logs paginés en fonction de la page actuelle et du filtre
+   */
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedLogs = this.filteredLogs().slice(startIndex, endIndex);
   }
 
+  /**
+   * Appliquer un tri à la table
+   * @param key Clé sur laquelle trier
+   */
   sortTable(key: string): void {
     if (this.sortKey === key) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -43,22 +54,30 @@ export class LogsComponent {
       this.sortKey = key;
       this.sortOrder = 'asc';
     }
-
+  
     this.logs.sort((a, b) => {
       const aValue = (a as any)[key];
       const bValue = (b as any)[key];
-
+  
       if (aValue < bValue) return this.sortOrder === 'asc' ? -1 : 1;
       if (aValue > bValue) return this.sortOrder === 'asc' ? 1 : -1;
       return 0;
     });
-
+  
     this.updatePagination();
   }
-
-  filteredLogs() {
-    return this.logs.filter((log) =>
-      log.action.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  
+  /**
+   * Filtrer les logs en fonction du terme de recherche
+   */
+  filteredLogs(): any[] {
+    return this.logs.filter((log) => {
+      const term = this.searchTerm.toLowerCase();
+      return (
+        log.action.toLowerCase().includes(term) || 
+        log.userName.toLowerCase().includes(term) // Recherche dans le nom d'utilisateur
+      );
+    });
   }
+  
 }

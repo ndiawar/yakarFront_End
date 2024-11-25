@@ -15,4 +15,109 @@ canvas {
   h4 {
     color: #00FF47;
   }
+  /* Personnalisation des filtres */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.filter-container label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Design pour le graphique */
+.card {
+  border: 1px solid #2b2b2b;
+  border-radius: 10px;
+}
+
+.card-header {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Ajustement des légendes Chart.js */
+canvas {
+  margin-top: 20px;
+  max-height: 400px;
+
+}
+.chart-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.loading-spinner {
+  text-align: center;
+  font-size: 16px;
+  color: #ffffff;
+  margin-top: 20px;
+}
+.list-group-item i {
+  font-size: 1.5rem;
+}
+/* Style global pour les éléments */
+.list-group-item {
+  color:  #00FF47;
+}
+
+.list-group-item i {
+  color:  #00FF47;
+}
+
+/* Changer la couleur au survol */
+.list-group-item:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.list-group-item i:hover {
+  color: white !important;
+}
   
+/* Pagination style */
+.list-group-item {
+  color:  #00FF47;
+}
+
+.list-group-item i {
+  color:  #00FF47;
+}
+
+.list-group-item:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.list-group-item i:hover {
+  color: white !important;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  background-color:  #00FF47;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ffffff;
+  cursor: not-allowed;
+}
+
+.pagination button:hover {
+  background-color: white;
+  color:  #00FF47;
+}
+
+.bi {
+  color:  #00FF47;
+}
+span{
+  color: #00FF47;
+}

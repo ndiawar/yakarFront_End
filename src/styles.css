@@ -169,3 +169,6 @@ body.dark-theme footer {
   background-color: #111015;  /* Fond sombre pour le footer */
   color: #ddd;  /* Texte plus clair */
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
