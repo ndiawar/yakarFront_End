@@ -9,11 +9,13 @@ import { CollecteService } from '../../../../services/collecte.service';
   templateUrl: './analyse.component.html',
   styleUrls: ['./analyse.component.css'],
 })
-
 export class AnalyseComponent implements AfterViewInit {
   @ViewChild('chartCanvas', { static: false }) chartCanvas!: ElementRef;
 
   public chart: Chart | undefined;
+  public loading: boolean = false;
+  public errorMessage: string | null = null;
+  public date: string = '2024-11-11';  // Exemple de date, tu peux la rendre dynamique
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
@@ -27,55 +29,37 @@ export class AnalyseComponent implements AfterViewInit {
       const ctx = canvas.getContext('2d');
       if (ctx) {
         try {
-          // Appeler la méthode du service pour récupérer la moyenne mensuelle
-          const monthlyAverage = await this.collecteService.getMonthlyAverage();
-          
-          // Si les données sont disponibles, les utiliser dans le graphique
-          if (monthlyAverage) {
-            // Extraire les données de la moyenne mensuelle pour température et humidité
-            const { temperatureMoyenne, humiditeMoyenne } = monthlyAverage;
+          // Appeler la méthode du service pour récupérer la moyenne journalière pour une date spécifique
+          this.loading = true;
+          const dailyAverage = await this.collecteService.getMoyenneJournaliere(this.date);
 
-            // Créer le graphique avec les moyennes mensuelles
+          // Si les données sont disponibles, les utiliser dans le graphique
+          if (dailyAverage) {
+            const { moyTemp, moyHum } = dailyAverage;  // Suppose que ces valeurs sont retournées par l'API
+
+            // Créer le graphique avec les moyennes journalières
             this.chart = new Chart(ctx, {
               type: 'line',
               data: {
-                labels: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'Dimanche'],
+                labels: [this.date], // Affiche la date comme l'axe X
                 datasets: [
                   {
-                    label: 'Humidité',
-                    data: [5, 10, 8, 12, 9, 13, 15], // Remplacer avec les vraies données si disponibles
-                    borderColor: 'white',
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                    tension: 0.4,
-                    borderWidth: 2,
-                  },
-                  {
-                    label: 'Température',
-                    data: [3, 7, 12, 10, 15, 18, 20], // Remplacer avec les vraies données si disponibles
+                    label: 'Température Moyenne (°C)',
+                    data: [moyTemp], // Température moyenne de la journée
                     borderColor: 'red',
                     backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    fill: true,
                     tension: 0.4,
                     borderWidth: 2,
                   },
-                  // Moyenne mensuelle de l'humidité
                   {
-                    label: 'Moyenne Humidité',
-                    data: new Array(7).fill(humiditeMoyenne), // Répéter la moyenne sur toute la semaine
+                    label: 'Humidité Moyenne (%)',
+                    data: [moyHum], // Humidité moyenne de la journée
                     borderColor: 'blue',
                     backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    fill: true,
                     tension: 0.4,
                     borderWidth: 2,
-                    borderDash: [5, 5], // Ligne pointillée
-                  },
-                  // Moyenne mensuelle de la température
-                  {
-                    label: 'Moyenne Température',
-                    data: new Array(7).fill(temperatureMoyenne), // Répéter la moyenne sur toute la semaine
-                    borderColor: 'green',
-                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
-                    tension: 0.4,
-                    borderWidth: 2,
-                    borderDash: [5, 5], // Ligne pointillée
                   },
                 ],
               },
@@ -117,10 +101,14 @@ export class AnalyseComponent implements AfterViewInit {
               },
             });
           } else {
-            console.error('Les données de moyenne mensuelle ne sont pas disponibles');
+            console.error('Les données de moyenne journalière ne sont pas disponibles');
+            this.errorMessage = 'Aucune donnée disponible pour la date spécifiée.';
           }
         } catch (error) {
-          console.error('Erreur lors de la récupération des moyennes mensuelles:', error);
+          console.error('Erreur lors de la récupération de la moyenne journalière:', error);
+          this.errorMessage = 'Erreur lors du chargement des données journalières.';
+        } finally {
+          this.loading = false;
         }
       } else {
         console.error('Impossible d’obtenir le contexte du canevas.');

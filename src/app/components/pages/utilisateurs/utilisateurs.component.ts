@@ -191,7 +191,7 @@ registerNewUser(): void {
     photo: this.newUser.photo,
   };
 
-  // Valider les données avant d'envoyer la requête
+  // Valider les données utilisateur avant d'envoyer la requête
   if (!this.validateUserInput(user)) {
     this.isSubmitting = false; // Réactiver le formulaire si validation échoue
     return;
@@ -203,51 +203,53 @@ registerNewUser(): void {
     .then((data) => {
       console.log('Utilisateur inscrit avec succès:', data);
 
-      // Ajouter l'utilisateur localement et mettre à jour la pagination
+      // Ajouter l'utilisateur localement et mettre à jour l'interface
       this.users.push(data.user);
       this.updatePagination();
 
-      // Fermer le modal, réinitialiser le formulaire et nettoyer les erreurs
+      // Réinitialiser l'état du formulaire
       this.closeModal();
       this.resetNewUserForm();
       this.errorMessage = null;
     })
     .catch((error) => {
       console.error('Erreur lors de l’inscription:', error.message);
-      this.errorMessage = error.message; // Afficher l'erreur utilisateur
+      this.errorMessage = error.message; // Afficher le message d'erreur dans l'interface
     })
     .finally(() => {
       this.isSubmitting = false; // Réactiver le formulaire après la réponse
     });
 }
 
-validateUserInput(user: { name: string; email: string; telephone: string; adresse: string; password: string; photo?: string }): boolean {
+validateUserInput(user: { name: string; email: string; password: string; telephone: string; adresse: string; }): boolean {
+  // Vérifier que tous les champs requis sont remplis
+  if (!user.name || !user.email || !user.password || !user.telephone || !user.adresse) {
+    this.errorMessage = 'Tous les champs obligatoires doivent être renseignés.';
+    return false;
+  }
+
+  // Vérifier le format de l'email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^(70|75|76|77|78)\d{7}$/;
-
-  if (!user.name || !user.email || !user.telephone || !user.adresse || !user.password) {
-    this.errorMessage = 'Tous les champs obligatoires doivent être remplis.';
-    return false;
-  }
-
   if (!emailRegex.test(user.email)) {
-    this.errorMessage = 'Adresse e-mail invalide.';
+    this.errorMessage = 'Adresse email invalide.';
     return false;
   }
 
+  // Vérifier le format du téléphone
+  const phoneRegex = /^(70|75|76|77|78)[0-9]{7}$/;
   if (!phoneRegex.test(user.telephone)) {
     this.errorMessage = 'Le numéro de téléphone est invalide.';
     return false;
   }
 
-  if (user.password.length < 6) {
-    this.errorMessage = 'Le mot de passe doit contenir au moins 6 caractères.';
+  // Vérifier la robustesse du mot de passe (au moins 8 caractères, une majuscule, un chiffre, un caractère spécial)
+  if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/.test(user.password)) {
+    this.errorMessage = 'Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.';
     return false;
   }
 
-  return true; // Validation réussie
+  return true;
 }
-
 
   resetNewUserForm(): void {
     this.newUser = {

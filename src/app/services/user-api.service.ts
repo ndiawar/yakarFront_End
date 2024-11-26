@@ -26,7 +26,8 @@ async fetchUsers(activeOnly: boolean = true): Promise<any[]> {
 }
 
 // Inscription d'un utilisateur
-// Service amélioré avec gestion des erreurs
+// Service d'inscription d'un utilisateur avec gestion des erreurs adaptées au backend
+
 async registerUser(user: {
   name: string;
   email: string;
@@ -39,15 +40,14 @@ async registerUser(user: {
     const response = await axios.post('/users/register', user);
 
     // Vérification explicite du statut de la réponse
-    if (response.status === 200 || response.status === 201) {
-      console.log('Utilisateur inscrit avec succès:', response.data);
-      return response.data;
+    if (response.status === 201) {
+      console.log('Utilisateur inscrit avec succès :', response.data);
+      return response.data; // Renvoie les données utilisateur et le message
     } else {
-      // Lancer une erreur si le statut est inattendu
       throw new Error(`Erreur inattendue : statut ${response.status}`);
     }
   } catch (error) {
-    // Gestion des erreurs spécifiques à Axios
+    // Gestion spécifique des erreurs Axios
     if (axios.isAxiosError(error)) {
       const statusCode = error.response?.status;
       const serverMessage = error.response?.data?.message;
@@ -55,27 +55,21 @@ async registerUser(user: {
       if (statusCode) {
         switch (statusCode) {
           case 400:
-            console.error('Erreur de validation des données:', serverMessage || 'Données invalides.');
-            break;
+            throw new Error(serverMessage || 'Données invalides. Veuillez vérifier les informations saisies.');
           case 403:
-            console.error('Erreur d\'authentification:', serverMessage || 'Accès refusé.');
-            break;
+            throw new Error(serverMessage || 'Accès refusé. Veuillez vérifier vos autorisations.');
           case 500:
-            console.error('Erreur serveur:', serverMessage || 'Une erreur est survenue sur le serveur.');
-            break;
+            throw new Error(serverMessage || 'Erreur interne du serveur. Veuillez réessayer plus tard.');
           default:
-            console.error('Erreur inconnue côté serveur:', serverMessage || 'Erreur inattendue.');
+            throw new Error(serverMessage || 'Une erreur inattendue est survenue.');
         }
       } else {
-        console.error('Erreur de communication avec le serveur:', error.message);
+        throw new Error('Erreur de communication avec le serveur. Veuillez vérifier votre connexion.');
       }
-
-      // Lever une erreur utilisateur avec un message adapté
-      throw new Error(serverMessage || 'Une erreur est survenue lors de l\'inscription.');
     }
 
-    // Gestion des erreurs générales (non-Axios)
-    console.error('Erreur non-gérée:', error);
+    // Gestion des erreurs générales non Axios
+    console.error('Erreur non-gérée :', error);
     throw new Error('Une erreur imprévue est survenue. Veuillez réessayer plus tard.');
   }
 }

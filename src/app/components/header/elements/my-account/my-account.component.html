@@ -1,18 +1,16 @@
 <!-- my-account.component.html -->
 <div class="media profile-media">
-    <img class="b-r-10" src="assets/images/dashboard/profile.png" alt="Profile Picture">
+    <img class="b-r-10" src={{user.photo}} alt="Profile Picture">
     <div class="media-body">
-      <span>Emay Walter</span>
-      <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+      <span>{{user.name}}</span>
+      <p class="mb-0 font-roboto">{{user.roles}} <i class="middle fa fa-angle-down"></i></p>
     </div>
   </div>
   
   <!-- Profile Dropdown -->
   <ul class="profile-dropdown onhover-show-div">
     <li><a href="javascript:void(0)"><span>Account</span></a></li>
-    <li><a href="javascript:void(0)"><span>Inbox</span></a></li>
-    <li><a href="javascript:void(0)"><span>Taskboard</span></a></li>
     <li><a href="javascript:void(0)"><span>Settings</span></a></li>
-    <li><span>Log out</span></li>
+    <li><span>Déconnexion</span></li>
   </ul>
   

@@ -7,12 +7,11 @@
                     
                     <div class="d-flex justify-content-between align-items-center mt-3 w-100">
                         <div>
-                            <h5 class="card-title">Salut, administrateur !</h5>
+                            <h5 class="card-title">Salut, {{user.name}} !</h5>
                             <p class="card-text">Bienvenue à la maison, il est humide au magasin.</p>
                         </div>
                         <div>
-                            <span class="d-block fs-4">13 Nov 2024 - 10:41</span>
-                            <span class="fs-3"><i class="bi bi-thermometer-half  text-white"></i>  - 15 %</span>
+                            <span class="d-block fs-4">{{currentDateTime}}</span>
                         </div>
                     </div>
                 </div>
@@ -33,10 +32,16 @@
                           <small class="ms-2 text-muted">Niveau actuel</small>
                         </div>
                         <div class="d-flex flex-row justify-content-between mt-3">
-                          <p class="mb-0">10:00 &nbsp; <br> <span class="highlight mt-2">15 %</span></p>
-                          <p class="mb-0">14:00 &nbsp; <br> <span class="highlight mt-2">...</span></p>
-                          <p>17:00 &nbsp; <br> <span class="highlight">...</span></p>
-                        </div>
+                            <p class="mb-0">10:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getHumiditeAt('10:00') }}</span>
+                            </p>
+                            <p class="mb-0">14:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getHumiditeAt('14:00') }}</span>
+                            </p>
+                            <p class="mb-0">17:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getHumiditeAt('17:00') }}</span>
+                            </p>
+                          </div>
                         <small class="text-white">
                             <i class="bi bi-droplet me-1 icon-green"></i> <!-- Icône goutte d'eau -->
                             est inférieur ou égal à <span class="highlight mt-2">27%</span>
@@ -56,16 +61,16 @@
                           <small class="ms-2 text-muted">Conditions actuelles</small>
                         </div>
                         <div class="d-flex flex-row justify-content-between mt-3">
-                          <p class="mb-0">10:00 &nbsp; <br> <span class="highlight mt-2">29 °C</span></p>
-                          <p class="mb-0">14:00 &nbsp; <br> <span class="highlight mt-2">...</span></p>
-                          <p>17:00 &nbsp; <br> <span class="highlight mt-2">...</span></p>
-                        </div>
-                        <small class="text-white">
-                            <i class="bi bi-thermometer-half  text-white"></i> <!-- Icône pour Température -->
-                            <span class=" mb-4">+</span> <!-- Signe "+" pour la température -->
-                            Est supérieur à <span class="highlight">27°</span>
-                        </small>                          
-                    </div>
+                            <p class="mb-0">10:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getTemperatureAt('10:00') }}</span>
+                            </p>
+                            <p class="mb-0">14:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getTemperatureAt('14:00') }}</span>
+                            </p>
+                            <p class="mb-0">17:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getTemperatureAt('17:00') }}</span>
+                            </p>
+                          </div>
                     </div>
                   </div>
                 <!-- Commandes -->

@@ -5,12 +5,6 @@ canvas {
   .card-moyenne {
     background-color: #2b2b2b;
   }
-  .list-group {
-    background-color: #2b2b2b;
-  }
-  .list-group-item i {
-    margin-right: 10px;
-  }
 
   h4 {
     color: #00FF47;
@@ -50,57 +44,58 @@ canvas {
   margin: 0 auto;
 }
 
-.loading-spinner {
-  text-align: center;
-  font-size: 16px;
-  color: #ffffff;
-  margin-top: 20px;
+.bi {
+  color:  #00FF47;
 }
+span{
+  color: #00FF47;
+}
+
+/*AJOUT*/
+/* Liste de groupe */
+.list-group {
+  background-color: #2b2b2b;
+}
+
+.list-group-item {
+  background-color: #333; /* Un peu plus clair que le fond de la carte */
+  color: #00FF47; /* Vert pour le texte */
+  border: none;
+}
+
+/* Icônes */
 .list-group-item i {
+  margin-right: 10px;
   font-size: 1.5rem;
+  color: #00FF47; /* Vert pour les icônes */
 }
-/* Style global pour les éléments */
+
+/* Style global pour les éléments de texte */
 .list-group-item {
-  color:  #00FF47;
+  color: #00FF47;
 }
 
-.list-group-item i {
-  color:  #00FF47;
+/* Lien et texte sur fond sombre */
+.list-group-item a {
+  color: #00FF47;
 }
 
-/* Changer la couleur au survol */
+/* Changer la couleur de fond au survol */
 .list-group-item:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
+  background-color: #ffffff !important; /* Fond légèrement plus clair au survol */
+  color: #000000 !important; /* Texte noir au survol */
 }
 
 .list-group-item i:hover {
-  color: white !important;
-}
-  
-/* Pagination style */
-.list-group-item {
-  color:  #00FF47;
+  color: white !important; /* Icône en blanc au survol */
 }
 
-.list-group-item i {
-  color:  #00FF47;
-}
-
-.list-group-item:hover {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-.list-group-item i:hover {
-  color: white !important;
-}
-
+/* Pagination */
 .pagination button {
   padding: 5px 10px;
   margin: 5px;
   border: none;
-  background-color:  #00FF47;
+  background-color: #00FF47;
   color: white;
   cursor: pointer;
 }
@@ -112,12 +107,12 @@ canvas {
 
 .pagination button:hover {
   background-color: white;
-  color:  #00FF47;
-}
-
-.bi {
-  color:  #00FF47;
-}
-span{
   color: #00FF47;
 }
+
+/* Styles supplémentaires */
+.bi {
+  color: #00FF47; /* Couleur des icônes */
+}
+
+/* Pour le texte des paragraphes et autres éléments */

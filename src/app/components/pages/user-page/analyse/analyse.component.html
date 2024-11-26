@@ -1,8 +1,21 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <!-- Graphique -->
-        <div class="col-md-12">
-            <canvas #chartCanvas class="chart-container"></canvas>
-        </div>
+      <!-- Graphique -->
+      <div class="col-md-12">
+        <canvas #chartCanvas class="chart-container"></canvas>
+      </div>
     </div>
-</div>
+  </div>
+  
+  <!-- Optionnel : Formulaire ou entrée pour changer la date
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+      <input
+        type="date"
+        [(ngModel)]="date"
+        aria-label="date"
+        class="form-control"
+        (change)="ngAfterViewInit()" />
+    </div>
+  </div> -->
+  

@@ -18,6 +18,31 @@ export class CollecteService {
     }
   }
 
+   // Récupérer la moyenne journalière pour une date spécifique
+   async getMoyenneJournaliere(date: string): Promise<any> {
+    try {
+      const response = await axios.get(`/collecte/moyenne-journaliere/${date}`); // API pour la moyenne journalière
+      return response.data;
+    } catch (error) {
+      console.error('Erreur lors de la récupération de la moyenne journalière:', error);
+      throw error;
+    }
+  }
+
+
+  // Modifier la méthode pour accepter un paramètre startOfWeekDate
+async getMoyenneHebdomadaire(startOfWeekDate: string): Promise<any> {
+  try {
+    // Remplacer l'URL par l'URL correcte avec la date spécifique
+    const response = await axios.get(`/collecte/moyenne-hebdomadaire/${startOfWeekDate}`);
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération de la moyenne hebdomadaire:', error);
+    throw error;
+  }
+}
+
+
   // Récupérer une donnée par ID
   async getDataById(id: string): Promise<any> {
     try {
@@ -28,8 +53,7 @@ export class CollecteService {
       throw error;
     }
   }
-
-  // Récupérer les moyennes journalières
+  
  // Récupérer les moyennes journalières
  async getDailyAverage(): Promise<any> {
   try {
@@ -83,7 +107,7 @@ async getCurrentMonthData(page: number = 1, pageSize: number = 6): Promise<any> 
       throw error;
     }
   }
-
+  
   // Filtrer les données pour une semaine donnée
   async getDataForWeek(date: string): Promise<any> {
     try {

@@ -74,16 +74,19 @@ export class UserPageComponent implements OnInit {
   }
 
   // Écouter les nouvelles données en temps réel via WebSocket
-  listenToRealTimeData(): void {
-    this.captureService.listenToRealTimeData().subscribe((data) => {
+listenToRealTimeData(): void {
+  this.captureService.listenToRealTimeData().subscribe((data) => {
+    // Vérifiez la présence des champs essentiels
+    if (data && data.date && data.heure && data.temperature !== undefined && data.humidite !== undefined) {
       // Ajouter les nouvelles données à la liste des données en temps réel
       this.realTimeData.push(data);
 
-      // Vous pouvez trier les données par heure ou appliquer d'autres filtres si nécessaire
-      this.realTimeData.sort((a, b) => a.time.localeCompare(b.time));
+      // Trier les données en fonction de l'heure
+      this.realTimeData.sort((a, b) => a.heure.localeCompare(b.heure));
+    } else {
+      console.error('Données reçues invalides ou incomplètes:', data);
+    }
+  });
+}
 
-      // Vous pouvez également filtrer pour n'afficher que les dernières données
-      // ou les données d'heures spécifiques (10:00, 14:00, 17:00)
-    });
-  }
 }

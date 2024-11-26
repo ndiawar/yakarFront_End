@@ -1,23 +1,41 @@
 <div class="container-fluid">
     <div class="row">
       <!-- Graphique -->
-      <div class="col-md-8">
-        <div class="card card-moyenne">
-          <div class="card-header text-center">
-            <h4>La température et l’humidité moyenne de la journée</h4>
+    <div class="col-md-8">
+      <div class="card card-moyenne">
+        <div class="card-header text-center">
+          <h4>La température et l’humidité moyenne de la journée</h4>
+        </div>
+        <div class="card-body">
+          <div>
+            <!-- Sélecteur pour choisir la période -->
+            <select class="bg-dark text-success" id="period" [(ngModel)]="activeFilter" aria-label="period" (change)="onFilterChange()">
+              <option value="daily">Moyenne Journalière</option>
+              <option value="weekly">Moyenne Hebdomadaire</option>
+            </select>
           </div>
-          <div class="card-body">
-            <canvas #chartCanvas></canvas>
-          </div>
+          
+          <!-- Canvas pour afficher le graphique -->
+          <canvas #chartCanvas></canvas>
+          
+          <!-- Affichage d'un message d'erreur -->
+          <div *ngIf="errorMessage" class="error-message text-white">{{ errorMessage }}</div>
+          
+          <!-- Indicateur de chargement -->
+          <div *ngIf="loading" class="loading-message text-white">Chargement...</div>
+          
+          <!-- Affichage des données du mois en cours avec pagination -->
+        
+          
         </div>
       </div>
-  
+    </div>  
       <!-- Liste -->
       <div class="col-md-4">
         <div class="card list-group">
           <div class="card-body">
-            <div class="list-group bg-light">
-              <a *ngFor="let item of currentMonthData" href="#" class="list-group-item list-group-item-action bg-dark">
+            <div class="list-group">
+              <p *ngFor="let item of currentMonthData" class="list-group-item list-group-item-action bg-dark">
                 <!-- Affichage conditionnel pour température ou humidité -->
                 <i class="bi" [ngClass]="{
                     'bi-cloud-rain': item.humidite !== undefined,
@@ -32,7 +50,7 @@
                 <ng-container *ngIf="item.humidite !== undefined">
                   Magasin est humide : {{ item.humidite }}% à {{ item.heure }}
                 </ng-container>
-              </a>
+              </p>
             </div>
           </div>
         </div>

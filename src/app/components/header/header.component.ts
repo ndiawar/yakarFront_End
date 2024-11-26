@@ -1,5 +1,6 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -12,10 +13,12 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
   isDarkMode = true; // Define the initial theme state (dark mode by default)
+  user: any;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.user = this.userService.getCurrentUser();
     // Vérifie si le mode est déjà défini dans localStorage
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       const theme = localStorage.getItem('theme') || 'dark-theme';
