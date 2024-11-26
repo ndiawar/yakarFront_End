@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef, inject } from '@angular/core';
 import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,16 @@ export class CaptureService {
   private socket: any;
 
   constructor() {
-    // Assurez-vous que l'URL de votre serveur WebSocket est correcte
-    this.socket = io('http://localhost:3000'); // Remplacez par l'URL de votre serveur
+    // Initialisation du socket avec autoConnect désactivé
+    this.socket = io('http://localhost:3000/', { autoConnect: false });
+
+    // Attente que l'application Angular soit stable avant de connecter le WebSocket
+    inject(ApplicationRef).isStable.pipe(
+      first((isStable) => isStable)
+    ).subscribe(() => {
+      // Connexion du socket après la stabilité de l'application
+      this.socket.connect();
+    });
   }
 
   // Méthode pour écouter les données en temps réel

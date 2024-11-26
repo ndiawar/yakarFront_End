@@ -1,52 +1,60 @@
-import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],  // Ajoutez CommonModule ici
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isDarkMode = true; // Define the initial theme state (dark mode by default)
+  user: any; // L'utilisateur connecté
+  isDarkMode: boolean = false; // Etat du thème (mode sombre/claire)
 
-  constructor() {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    // Vérifie si le mode est déjà défini dans localStorage
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      const theme = localStorage.getItem('theme') || 'dark-theme';
-      this.isDarkMode = theme === 'dark-theme'; // Set initial theme based on localStorage
-      document.body.classList.add(theme);
-      this.updateIcon(); // Call to update the icon on initial load
-    }
+    this.loadUserData();
+    this.isDarkMode = this.checkDarkMode(); // Vérifier le mode actuel
   }
 
+  // Charger les données de l'utilisateur depuis le service
+  loadUserData(): void {
+    this.userService.getProfile().subscribe(
+      (data) => {
+        this.user = data; // Assurez-vous que votre service renvoie bien l'utilisateur
+      },
+      (error) => {
+        console.error('Erreur de chargement des données utilisateur', error);
+      }
+    );
+  }
+
+  // Vérifier si le mode sombre est activé (en utilisant les cookies)
+  checkDarkMode(): boolean {
+    const theme = document.cookie.match(/theme=(dark|light)/);
+    return theme ? theme[1] === 'dark' : false; // Retourne true si 'dark' ou false si 'light' ou cookie non trouvé
+  }
+
+  // Changer le thème
   toggleTheme(): void {
-    this.isDarkMode = !this.isDarkMode; // Toggle the theme state
-    const themeIcon = document.getElementById('themeIcon');
-    if (themeIcon) {
-      // Update the icon class based on the current theme
-      themeIcon.className = this.isDarkMode ? 'bi bi-moon-fill theme-icon moon' : 'bi bi-sun-fill theme-icon sun';
-    }
-  
-    // Toggle between dark and light themes
-    document.body.classList.toggle('dark-theme', this.isDarkMode);
-    document.body.classList.toggle('light-theme', !this.isDarkMode);
-  
-    // Store the selected theme in localStorage
-    localStorage.setItem('theme', this.isDarkMode ? 'dark-theme' : 'light-theme');
+    this.isDarkMode = !this.isDarkMode;
+    document.cookie = `theme=${this.isDarkMode ? 'dark' : 'light'}; path=/`;
+    document.body.classList.toggle('dark-mode', this.isDarkMode); // Appliquer le thème
   }
-  
 
-  private updateIcon(): void {
-    const themeIcon = document.getElementById('themeIcon');
-    if (themeIcon) {
-      // Update the icon based on the initial theme
-      themeIcon.className = this.isDarkMode ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
-    }
+  // Méthode de déconnexion
+  logout(): void {
+    this.userService.logout().subscribe(
+      () => {
+        this.router.navigate(['/login']); // Rediriger vers la page de connexion après la déconnexion
+      },
+      (error) => {
+        console.error('Erreur lors de la déconnexion:', error);
+      }
+    );
   }
 }

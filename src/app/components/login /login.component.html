@@ -64,7 +64,7 @@
           <h1 class="texte-success fs-1 mb-4">Connexion</h1>
           <p class="mb-4 text-start">Veuillez remplir vos informations ci-dessous</p>
 
-          <form #emailForm="ngForm" (ngSubmit)="onEmailSubmit()">
+          <form #emailForm="ngForm" (ngSubmit)="loginWithEmail()">
             <!-- Champ email -->
             <div class="mb-5">
               <div class="input-group">
@@ -144,38 +144,32 @@
           <h1 class="texte-success fs-1 mb-4 text-center">Connexion</h1>
           <p class="mb-4 text-center">Veuillez entrer votre code secret ci-dessous</p>
 
-        <!--  <form (ngSubmit)="onCodeSubmit()" #codeForm="ngForm">
-             Champ code secret (4 inputs) 
-            <div class="d-flex justify-content-center gap-3 mb-3">
-              <input
-                *ngFor="let digit of code; let i = index"
-                #inputRef
-                type="text"
-                maxlength="1"
-                class="form-control text-center code-input bg-white text-dark"
-                required
-                (input)="onInput($event, inputRef.nextElementSibling)"
-                (keydown)="allowOnlyNumbers($event)"
-                [(ngModel)]="code[i]"
-                name="code{{ i + 1 }}"
-                aria-label="Code chiffre {{ i + 1 }}"
-              />
-            </div>
-          
-             Message d'erreur
-            <div *ngIf="missingDigits > 0" class="text-danger text-center mb-3" aria-live="polite">
+          <form (ngSubmit)="onSubmitCodeSecret()" #codeForm="ngForm">
+            <!-- Champ code secret (4 inputs) -->
+            <div class="form-group">
+        <label id="nameCode" for="code">Code secret</label><br>
+        <div class="code-inputs"><br>
+          <input
+            *ngFor="let c of code; let i = index"
+            [value]="getDisplayValue(i)"
+            #codeInput
+            (input)="isCodeTabDisabled ? handleKeypadInteraction() : handleInput($event, i)"
+            maxlength="1"
+            type="text"
+            class="code-input"
+            autocomplete="off"
+            [attr.tabindex]="i + 1"
+          />
+        </div>
+      </div>
+
+            <!-- Message d'erreur -->
+            <div *ngIf="missingDigits > 0" class="text-danger text-center mb-3">
               Il manque {{ missingDigits }} chiffre{{ missingDigits > 1 ? 's' : '' }}.
             </div>
-          
-             Bouton de soumission
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-success w-50 py-2 fw-bold" [disabled]="!isCodeValid">
-                Valider le Code
-              </button>
-            </div>
           </form>
-          
-          -->
+
+
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 // Importation des composants
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './components/login /login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AdminPageComponent } from './components/pages/admin-page/admin-page.component';
 import { LogsComponent } from './components/pages/logs/logs.component';
