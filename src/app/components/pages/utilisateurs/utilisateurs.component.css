@@ -4,13 +4,44 @@ body {
   color: #ffffff;
   padding: 20px; 
   border-radius: 8px;
+  height: 100%;
 }
+
+
 .stats-container {
   display: flex;
   justify-content: space-between;
   background-color: #1e1e1e;
   padding: 20px;
   border-radius: 10px;
+}
+
+/* Fixer la page avec une hauteur spécifique et rendre le tableau scrollable */
+.container-fluid {
+  min-height: 100vh;  /* Remplir toute la hauteur de la fenêtre */
+}
+
+/* Tableau des utilisateurs scrollable */
+.table-container {
+  max-height: 400px;  /* Limiter la hauteur de la liste */
+  overflow-y: auto;  /* Ajouter le défilement vertical */
+  display: block;    /* Pour que le tableau soit scrollable */
+}
+
+.table {
+  width: 100%;
+}
+
+.table th,
+.table td {
+  white-space: nowrap; /* Empêcher le texte de se couper */
+}
+
+/* Pour rendre l'interface responsive */
+@media (max-width: 768px) {
+  .table-container {
+    max-height: 300px;
+  }
 }
 
 .stat-box {
@@ -32,7 +63,126 @@ body {
   width: 50px;
   height: 50px;
   margin-right: 15px;
+}/* Couleurs et typographie globales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #181818;
+  color: white;
+  margin: 0;
+  padding: 0;
 }
+
+/* Modal */
+.modal-dialog {
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.modal-custom {
+  background-color: #242424;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+/* Champs de formulaire */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group-text {
+  background-color: #fff;
+  border: none;
+  color: #181818;
+  font-size: 1.2rem;
+  padding: 10px 15px;
+}
+
+.form-control {
+  border: none;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00ff47;
+}
+
+/* Erreurs de validation */
+.text-danger {
+  font-size: 0.85rem;
+}
+
+/* Bouton Inscrire */
+.btn-success {
+  background-color: #00ff47;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #00ff47;
+}
+
+.btn-success:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Image de prévisualisation */
+.img-fluid {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+}
+
+/* Logo et titre */
+.text-success {
+  color: #00ff47 !important;
+}
+
+.modal-title {
+  color: #00ff47;
+}
+
+.text-white {
+  color: white;
+}
+
+p.text-center {
+  font-size: 1.2rem;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+
 
 .icon-circle i {
   font-size: 24px;
@@ -307,7 +457,7 @@ td {
 
 /* Si "admin" (checked) : vert */
 .switch .slider.active {
-  background-color: #28a745;
+  background-color: #00ff47;
 }
 
 /* Effet de transition */
@@ -324,7 +474,7 @@ td {
 }
 
 .switch input:checked + .slider {
-  background-color: #28a745; /* vert */
+  background-color: #00ff47; /* vert */
 }
 
 /* Style du sélecteur de filtre */

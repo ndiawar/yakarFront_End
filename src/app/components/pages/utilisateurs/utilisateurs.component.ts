@@ -127,7 +127,7 @@ export class UtilisateursComponent implements OnInit {
   }
 
   // Filtrage des utilisateurs
-  filteredUsers(): User[] {
+  /* filteredUsers(): User[] {
     return this.users.filter((user) => {
       const matchesSearch =
         (user.name || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -140,7 +140,7 @@ export class UtilisateursComponent implements OnInit {
 
       return matchesSearch && matchesRole;
     });
-  }
+  } */
   sortTable(key: string): void {
     if (this.sortKey === key) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -240,8 +240,8 @@ validateUserInput(user: { name: string; email: string; telephone: string; adress
     return false;
   }
 
-  if (user.password.length < 6) {
-    this.errorMessage = 'Le mot de passe doit contenir au moins 6 caractères.';
+  if (user.password.length < 8) {
+    this.errorMessage = 'Le mot de passe doit contenir au moins 8 caractères.';
     return false;
   }
 
@@ -312,7 +312,7 @@ editUser(user: User): void {
 }
 
 // Soumettre la mise à jour d'un utilisateur
-updateUser(): void {
+/* updateUser(): void {
   if (this.userToEdit) {
     this.isLoading = true;
     this.errorMessage = null;
@@ -335,7 +335,27 @@ updateUser(): void {
         this.isLoading = false;
       });
   }
+} */
+updateUser(): void {
+  this.userApiService
+    .updateUser(this.userToEdit._id, this.userToEdit)
+    .then(() => {
+      this.users = this.users.map((user) =>
+        user._id === this.userToEdit._id ? { ...this.userToEdit } : user
+      );
+      this.closeModal();
+    })
+    .catch((error) => {
+      if (error.status === 400) {
+        this.errorMessage = 'Cet identifiant existe deja';
+      } else {
+        console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
+        this.errorMessage = 'Une erreur est survenue lors de la mise à jour de l\'utilisateur.';
+      }
+      
+    });
 }
+
 
 // Ouvrir le modal de mise à jour
 openModalUpdate(): void {
@@ -357,4 +377,45 @@ closeModalUpdate(): void {
   get adminUsersCount(): number {
     return this.users.filter((user) => user.roles.includes('admin')).length;
   }
+
+   // Fonction appelée à chaque changement dans le champ de recherche
+
+
+   onSearch(): void {
+    if (this.searchTerm.trim().length > 0) {
+      // Requête de recherche des utilisateurs
+      this.userApiService
+        .searchUsers(this.searchTerm)
+        .then((users) => {
+          this.users = users;  // Mettez à jour la liste des utilisateurs filtrés
+          this.updatePagination(); // Mettez à jour la pagination
+        })
+        .catch((error) => {
+          this.errorMessage = error.message;  // Gérer l'erreur
+        });
+    } else {
+      // Si le champ de recherche est vide, récupérer tous les utilisateurs actifs
+      this.fetchUsers();
+    }
+  }
+  
+  // Mise à jour de la pagination
+  
+  // Filtrage des utilisateurs basé sur le terme de recherche
+  filteredUsers(): User[] {
+    return this.users.filter((user) => {
+      const matchesSearch =
+        (user.name || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (user.email || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (user.adresse || '').toLowerCase().includes(this.searchTerm.toLowerCase());
+  
+      const matchesRole = this.selectedRole
+        ? user.roles.includes(this.selectedRole)
+        : true;
+  
+      return matchesSearch && matchesRole;
+    });
+  }
+  
 }
+
