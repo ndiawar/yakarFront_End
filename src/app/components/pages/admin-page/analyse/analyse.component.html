@@ -1,55 +1,41 @@
 <div class="container-fluid">
-    <div class="row">
-      <!-- Graphique -->
-      <div class="col-md-8">
-        <div class="card card-moyenne">
-          <div class="card-header text-center">
-            <h4>La température et l’humidité moyenne de la journée</h4>
-          </div>
-          <div class="card-body">
-            <canvas #chartCanvas></canvas>
-          </div>
+  <div class="row">
+    <!-- Sélecteurs -->
+    <div class="col-md-8">
+      <div class="card card-moyenne">
+        <div class="card-header text-center">
+          <h4>Choisissez les paramètres</h4>
+        </div>
+        <div class="card-body">
+          <label for="year">Année :</label>
+          <select id="year" [(ngModel)]="selectedYear" (change)="updateChart()" class="form-control">
+            <option *ngFor="let year of [2023, 2024, 2025]">{{ year }}</option>
+          </select>
+
+          <label for="month">Mois :</label>
+          <select id="month" [(ngModel)]="selectedMonth" (change)="updateChart()" class="form-control">
+            <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">{{ month }}</option>
+          </select>
+
+          <label for="week">Semaine :</label>
+          <select id="week" [(ngModel)]="selectedWeek" (change)="updateChart()" class="form-control">
+            <option *ngFor="let week of [1, 2, 3, 4]">{{ week }}</option>
+          </select>
         </div>
       </div>
-  
-      <!-- Liste -->
-      <div class="col-md-4">
-        <div class="card list-group">
-          <div class="card-body">
-            <div class="list-group bg-light">
-              <a *ngFor="let item of currentMonthData" href="#" class="list-group-item list-group-item-action bg-dark">
-                <!-- Affichage conditionnel pour température ou humidité -->
-                <i class="bi" [ngClass]="{
-                    'bi-cloud-rain': item.humidite !== undefined,
-                    'bi-thermometer': item.temperature !== undefined
-                  }"></i>
-  
-                <!-- Température ou humidité -->
-                <ng-container *ngIf="item.temperature !== undefined">
-                  Température Magasin : {{ item.temperature }}°C à {{ item.heure }}
-                </ng-container>
-  
-                <ng-container *ngIf="item.humidite !== undefined">
-                  Magasin est humide : {{ item.humidite }}% à {{ item.heure }}
-                </ng-container>
-              </a>
-            </div>
-          </div>
+    </div>
+
+    <!-- Graphique -->
+    <div class="col-md-8">
+      <div class="card card-moyenne">
+        <div class="card-header text-center">
+          <h4>La température et l’humidité moyenne de la semaine</h4>
         </div>
-  
-        <!-- Pagination -->
-        <div class="pagination mt-3">
-          <!-- Flèche de gauche -->
-          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="btn btn-link" title="Page précédente">
-            <i class="bi bi-arrow-left"></i>
-          </button>
-  
-          <!-- Flèche de droite -->
-          <button (click)="goToPage(currentPage + 1)" class="btn btn-link" title="Page suivante">
-            <i class="bi bi-arrow-right"></i>
-          </button>
+        <div class="card-body">
+          <canvas id="chartCanvas"></canvas>
         </div>
       </div>
     </div>
   </div>
-  
+
+</div>

@@ -1,175 +1,104 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Chart } from 'chart.js/auto';
-import { CollecteService } from '../../../../services/collecte.service';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'app-analyse',
   standalone: true,
-  imports: [CommonModule],
+  imports: [HttpClientModule, FormsModule, CommonModule],
   templateUrl: './analyse.component.html',
   styleUrls: ['./analyse.component.css'],
 })
-export class AnalyseComponent implements OnInit, AfterViewInit {
-  @ViewChild('chartCanvas') chartCanvas!: ElementRef;
-  public chart: Chart | null = null;
-  public loading: boolean = false;
-  public currentMonthData: any[] = [];
-  public currentPage: number = 1;
-  public pageSize: number = 8; // Limiter à 8 éléments par page
-  public isSSR: boolean;
+export class AnalyseComponent implements OnInit {
+  selectedYear: number = new Date().getFullYear();
+  selectedMonth: number = new Date().getMonth() + 1;
+  selectedWeek: number = 1;
 
-  constructor(
-    private collecteService: CollecteService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    // Vérifie si le code est exécuté côté serveur ou navigateur
-    this.isSSR = !isPlatformBrowser(this.platformId);
-  }
+  chart: any;
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    // Charger les données uniquement si on est côté navigateur
-    if (!this.isSSR) {
-      this.loadMonthlyAverages();
-      this.loadCurrentMonthData();
-    } else {
-      console.warn('Les données ne seront pas chargées côté serveur.');
-    }
+    this.updateChart(); // On met à jour le graphique lors du chargement du composant
   }
 
   ngAfterViewInit(): void {
-    // Assurez-vous que Chart.js ne s'exécute que dans le navigateur
-    if (!this.isSSR) {
-      console.log('Initialisation côté client.');
-    } else {
-      console.warn('Chart.js ne peut pas être exécuté côté serveur.');
+    // Cette fonction garantit que le DOM est prêt avant de tenter d'accéder à l'élément canvas
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.createChart([], []); // Initialisation vide avant la récupération des données
     }
   }
 
-  // Charger les moyennes mensuelles
-  async loadMonthlyAverages(): Promise<void> {
-    this.loading = true;
-    try {
-      const response = await this.collecteService.getMonthlyAverage();
-      if (response?.averages) {
-        const labels = response.averages.map((item: any) => item._id);
-        const avgTemperature = response.averages.map((item: any) => item.avgTemperature);
-        const avgHumidite = response.averages.map((item: any) => item.avgHumidite);
+  // Fonction pour mettre à jour le graphique avec les sélections de l'utilisateur
+  updateChart(): void {
+    const payload = {
+      year: this.selectedYear,
+      month: this.selectedMonth,
+      week: this.selectedWeek,
+    };
 
-        this.updateChart(labels, avgTemperature, avgHumidite);
-      } else {
-        console.warn('Aucune donnée trouvée pour les moyennes mensuelles.');
-        alert('Aucune donnée disponible pour afficher les moyennes mensuelles.');
-      }
-    } catch (error) {
-      console.error('Erreur lors du chargement des moyennes mensuelles:', error);
-    } finally {
-      this.loading = false;
-    }
+    // Requête API pour récupérer les données de la semaine
+    this.http
+      .post('http://localhost:5001/api/capteurs/weekly-average', payload)
+      .subscribe({
+        next: (data: any) => {
+          console.log('Données de l\'API :', data);  // Debugging des données
+          const avgTemperatures = data.avgTemperatures || [];
+          const avgHumidites = data.avgHumidites || [];
+          // Création du graphique avec les données récupérées
+          if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+            this.createChart(avgTemperatures, avgHumidites);
+          }
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération des données :', err);
+        },
+      });
   }
 
-  // Charger les données du mois en cours avec pagination
-  loadCurrentMonthData(): void {
-    this.loading = true;
-    this.collecteService.getCurrentMonthData(this.currentPage, this.pageSize).then(
-      (data) => {
-        this.currentMonthData = data.currentMonthData;
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération des données du mois en cours :', error);
-        this.loading = false;
-      }
-    );
-  }
-
-  // Gérer la pagination
-  goToPage(page: number): void {
-    if (page < 1) {
-      return;
-    }
-    this.currentPage = page;
-    this.loadCurrentMonthData();
-  }
-
-  // Mettre à jour le graphique avec les données
-  updateChart(labels: string[], temperatureData: number[], humidityData: number[]): void {
-    if (this.isSSR) {
-      console.warn('Mise à jour du graphique ignorée car exécutée côté serveur.');
-      return;
-    }
-
-    if (!this.chartCanvas) {
-      console.error("Le canevas pour le graphique n'est pas trouvé.");
-      return;
-    }
-
-    const ctx = this.chartCanvas.nativeElement.getContext('2d');
-    if (!ctx) {
-      console.error("Impossible d'obtenir le contexte du canevas.");
-      return;
-    }
-
+  // Fonction pour créer et afficher le graphique avec Chart.js
+  createChart(avgTemperatures: number[], avgHumidites: number[]): void {
+    // Si un graphique existe déjà, on le détruit pour éviter les doublons
     if (this.chart) {
       this.chart.destroy();
     }
 
+    // Récupération de l'élément canvas dans le DOM
+    const ctx = document.getElementById('chartCanvas') as HTMLCanvasElement;
+
+    // Création du graphique avec les températures et humidités moyennes
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: labels,
+        labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'], // Jours de la semaine
         datasets: [
           {
-            label: 'Température Moyenne (°C)',
-            data: temperatureData,
-            borderColor: '#00FF47',
-            backgroundColor: 'rgba(0, 255, 71, 0.5)',
-            fill: true,
+            label: 'Température moyenne (°C)',
+            data: avgTemperatures,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2,
+            fill: false,
           },
           {
-            label: 'Humidité Moyenne (%)',
-            data: humidityData,
+            label: 'Humidité moyenne (%)',
+            data: avgHumidites,
             borderColor: '#12692b',
             backgroundColor: 'rgba(18, 105, 43, 0.5)',
-            fill: true,
+            borderWidth: 2,
+            fill: false,
           },
         ],
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: {
-            display: true,
-          },
-          tooltip: {
-            enabled: true,
-          },
-        },
         scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Mois',
-            },
-          },
           y: {
-            title: {
-              display: true,
-              text: 'Valeur',
-            },
+            beginAtZero: true,
           },
         },
       },
     });
-  }
-
-  // Formater la description des données
-  getDescription(data: any): string {
-    if (data.type === 'humidite') {
-      return `Magasin est humide ${data.value}% à ${data.time}`;
-    } else {
-      return `Température du magasin est de ${data.value}°C à ${data.time}`;
-    }
   }
 }

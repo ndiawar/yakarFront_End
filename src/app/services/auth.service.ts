@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from '../config/axios-config'; // Import de l'instance Axios configurée
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthService {
   }
 
   // Méthode de connexion
-  login(email?: string, password?: string, secretCode?: string): Promise<any> {
+  login(email?: string, password?: string, secretCode?: string): Observable<any> {
     const loginData: any = {};
 
     if (email && password) {
@@ -24,10 +25,10 @@ export class AuthService {
     } else if (secretCode) {
       loginData.secretCode = secretCode;
     } else {
-      return Promise.reject('Veuillez fournir un email/mot de passe ou un code secret.');
+      return from(Promise.reject('Veuillez fournir un email/mot de passe ou un code secret.'));
     }
 
-    return axios.post('/auth/login', loginData)
+    const promise = axios.post('/auth/login', loginData)
       .then(response => {
         this.user = response.data.user;
         this.loggedIn = true;
@@ -43,6 +44,8 @@ export class AuthService {
           throw new Error('Erreur dans la configuration de la requête');
         }
       });
+
+    return from(promise); // Conversion de la *Promise* en `Observable`
   }
 
   // Méthode de déconnexion

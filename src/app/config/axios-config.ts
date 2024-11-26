@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Configuration globale d'Axios
-axios.defaults.baseURL = 'http://localhost:5000/api/';  // URL de base
+axios.defaults.baseURL = 'http://localhost:5001/api/';  // URL de base
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
 axios.defaults.withCredentials = false;  // Désactiver l'envoi de cookies pour l'instant

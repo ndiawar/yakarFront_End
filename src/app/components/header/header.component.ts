@@ -1,5 +1,6 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -12,10 +13,12 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent implements OnInit {
   isDarkMode = true; // Define the initial theme state (dark mode by default)
+  user: any;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.user = this.userService.getCurrentUser();
     // Vérifie si le mode est déjà défini dans localStorage
     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       const theme = localStorage.getItem('theme') || 'dark-theme';
@@ -32,15 +35,15 @@ export class HeaderComponent implements OnInit {
       // Update the icon class based on the current theme
       themeIcon.className = this.isDarkMode ? 'bi bi-moon-fill theme-icon moon' : 'bi bi-sun-fill theme-icon sun';
     }
-  
+
     // Toggle between dark and light themes
     document.body.classList.toggle('dark-theme', this.isDarkMode);
     document.body.classList.toggle('light-theme', !this.isDarkMode);
-  
+
     // Store the selected theme in localStorage
     localStorage.setItem('theme', this.isDarkMode ? 'dark-theme' : 'light-theme');
   }
-  
+
 
   private updateIcon(): void {
     const themeIcon = document.getElementById('themeIcon');
