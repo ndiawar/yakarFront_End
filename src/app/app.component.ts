@@ -5,6 +5,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CommonModule } from '@angular/common'; // Ajout du CommonModule pour *ngIf
+import { HttpClientModule } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,7 @@ import { CommonModule } from '@angular/common'; // Ajout du CommonModule pour *n
     HeaderComponent,
     FooterComponent,
     MenuComponent,
+    HttpClientModule,
     CommonModule, // Nécessaire pour utiliser *ngIf
   ],
   templateUrl: './app.component.html',
@@ -33,5 +36,5 @@ export class AppComponent {
       }
     });
   }
-  
+
 }

@@ -11,3 +11,43 @@
     height: 400px;
     width: 100%;
 }
+
+.card {
+  margin-bottom: 20px;
+}
+
+.list-group-item {
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.text-center {
+  margin-top: 20px;
+}
+
+.bg-dark {
+  background-color: #000 !important; /* Fond noir */
+}
+
+.text-success {
+  color: #28a745 !important; /* Texte vert */
+}
+
+.list-group-item.bg-dark {
+  background-color: #000 !important; /* Fond noir pour chaque élément */
+}
+
+.list-group-item.text-success,.h4 {
+  color: #28a745 !important; /* Texte vert pour chaque élément */
+}
+
+.border-secondary {
+  border-color: #6c757d !important; /* Bordure grise */
+}
+
+#graph{
+  width: 100%;
+}
+#h4{
+  color: green
+}

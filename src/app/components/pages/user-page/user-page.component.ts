@@ -1,92 +1,88 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CollecteService } from '../../../services/collecte.service';
-import { CaptureService } from '../../../services/capture.service'; // Importer le service CaptureService
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../services/user.service';
 import { AnalyseComponent } from './analyse/analyse.component';
+import { CapteurDataService } from '../../../services/capteur-data.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
-  imports: [AnalyseComponent, CommonModule],
+  imports: [AnalyseComponent],
   templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css'],
+  styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent implements OnInit {
-  public loading: boolean = false;
-  public currentMonthData: any[] = [];
-  public realTimeData: any[] = [];  // Stocker les données en temps réel
-  public currentPage: number = 1;
-  public pageSize: number = 8; // Limiter à 8 éléments par page
+  user: any;
+  currentDateTime: string = '';
+  temperatureData: any[] = [];  // Pour stocker les données de température récupérées
+  humiditeData: any[] = []; //
+  errorMessage: string = '';
+  temperature: number = 0;
+  humidite: number = 0;
 
-  constructor(
-    private collecteService: CollecteService,
-    private captureService: CaptureService,  // Injecter CaptureService
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor(private userService: UserService,private capteurDataService: CapteurDataService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.loadCurrentMonthData(); // Charger les données du mois en cours
-    this.listenToRealTimeData();  // Écouter les données en temps réel via WebSocket
+    this.user = this.userService.getCurrentUser();
+    this.updateDateTime();
+    this.fetchLastDayData();
   }
 
-  // Charger les données du mois en cours avec pagination
-  loadCurrentMonthData(): void {
-    this.loading = true;
-    this.collecteService.getCurrentMonthData(this.currentPage, this.pageSize).then(
-      (data) => {
-        this.currentMonthData = data.currentMonthData;
-        this.loading = false;
+  updateDateTime(): void {
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'short', // Affiche le mois sous forme abrégée (e.g., "Nov")
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    };
+    this.currentDateTime = new Intl.DateTimeFormat('en-US', options).format(now);
+  }
+
+  fetchLastDayData(): void {
+    this.capteurDataService.getLastDayData().subscribe({
+      next: (response) => {
+        console.log('Réponse API :', response);  // Pour vérifier la structure des données
+        this.temperatureData = response.data;
+
+        // Affiche les heures retournées pour vérifier qu'elles sont bien formatées
+        this.temperatureData.forEach((data) => {
+          console.log('Heure retournée:', data.heure);
+        });
       },
-      (error) => {
-        console.error('Erreur lors de la récupération des données du mois en cours :', error);
-        this.loading = false;
-      }
-    );
+      error: (error) => {
+        console.error('Erreur lors de la récupération des données :', error);
+        this.errorMessage = 'Impossible de récupérer les données.';
+      },
+    });
   }
 
-  // Gérer la pagination
-  goToPage(page: number): void {
-    if (page < 1) {
-      return;
-    }
-    this.currentPage = page;
-    this.loadCurrentMonthData();
+
+
+  getTemperatureAt(heure: string): string {
+    const formattedHeure = heure.slice(0, 5); // Transforme l'heure au format "HH:mm"
+    console.log('Heure formatée à rechercher:', formattedHeure);  // Affiche l'heure recherchée
+
+    const data = this.temperatureData.find((d) => {
+      const formattedDataHeure = d.heure.slice(0, 5); // Formate la donnée de l'heure pour comparaison
+      console.log('Comparaison entre', formattedHeure, 'et', formattedDataHeure);  // Compare les heures
+      return formattedDataHeure === formattedHeure;
+    });
+
+    return data ? `${data.temperature} °C` : '...';
   }
 
-  // Formater la description des données
-  getDescription(data: any): string {
-    if (data.type === 'humidite') {
-      return `Magasin est humide ${data.value}% à ${data.time}`;
-    } else {
-      return `Température du magasin est de ${data.value}°C à ${data.time}`;
-    }
+  getHumiditeAt(heure: string): string {
+    const formattedHeure = heure.slice(0, 5); // Transforme l'heure au format "HH:mm"
+    console.log('Heure formatée à rechercher pour humidité:', formattedHeure);  // Affiche l'heure recherchée
+
+    const data = this.temperatureData.find((d) => {
+      const formattedDataHeure = d.heure.slice(0, 5); // Formate la donnée de l'heure pour comparaison
+      console.log('Comparaison entre', formattedHeure, 'et', formattedDataHeure);  // Compare les heures
+      return formattedDataHeure === formattedHeure;
+    });
+
+    return data ? `${data.humidite} %` : '...';
   }
-
-  // Méthode pour obtenir la valeur de température ou d'humidité en temps réel pour une heure donnée
-  getRealTimeValue(type: string, hour: string): string | null {
-    // Filtrer les données en fonction de l'heure et du type (temperature ou humidite)
-    const data = this.realTimeData.filter(
-      (item) => item.heure === hour && item[type] !== undefined
-    );
-
-    // Retourner la première valeur trouvée ou null si aucune donnée correspond
-    return data.length > 0 ? data[0][type].toString() : null;
-  }
-
-  // Écouter les nouvelles données en temps réel via WebSocket
-listenToRealTimeData(): void {
-  this.captureService.listenToRealTimeData().subscribe((data) => {
-    // Vérifiez la présence des champs essentiels
-    if (data && data.date && data.heure && data.temperature !== undefined && data.humidite !== undefined) {
-      // Ajouter les nouvelles données à la liste des données en temps réel
-      this.realTimeData.push(data);
-
-      // Trier les données en fonction de l'heure
-      this.realTimeData.sort((a, b) => a.heure.localeCompare(b.heure));
-    } else {
-      console.error('Données reçues invalides ou incomplètes:', data);
-    }
-  });
-}
-
 }

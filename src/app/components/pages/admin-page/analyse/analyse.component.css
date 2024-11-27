@@ -1,118 +1,50 @@
-canvas {
-    width: 100% !important;
-    height: 400px !important;
-  }
-  .card-moyenne {
-    background-color: #2b2b2b;
-  }
 
-  h4 {
-    color: #00FF47;
-  }
-  /* Personnalisation des filtres */
-.filter-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.filter-container label {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-/* Design pour le graphique */
-.card {
-  border: 1px solid #2b2b2b;
-  border-radius: 10px;
-}
-
-.card-header {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* Ajustement des légendes Chart.js */
 canvas {
   margin-top: 20px;
-  max-height: 400px;
+  border-radius: 10px; /* Coins arrondis */
+  background-color: #1e1e1e; /* Fond du graphique */
+  color: white; /* Texte blanc */
 
 }
+
 .chart-container {
+  height: 400px;
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
 }
 
-.bi {
-  color:  #00FF47;
-}
-span{
-  color: #00FF47;
-}
-
-/*AJOUT*/
-/* Liste de groupe */
-.list-group {
-  background-color: #2b2b2b;
+.card {
+margin-bottom: 20px;
 }
 
 .list-group-item {
-  background-color: #333; /* Un peu plus clair que le fond de la carte */
-  color: #00FF47; /* Vert pour le texte */
-  border: none;
+padding: 15px;
+border-radius: 5px;
 }
 
-/* Icônes */
-.list-group-item i {
-  margin-right: 10px;
-  font-size: 1.5rem;
-  color: #00FF47; /* Vert pour les icônes */
+.text-center {
+margin-top: 20px;
 }
 
-/* Style global pour les éléments de texte */
-.list-group-item {
-  color: #00FF47;
+.bg-dark {
+background-color: #000 !important; /* Fond noir */
 }
 
-/* Lien et texte sur fond sombre */
-.list-group-item a {
-  color: #00FF47;
+.text-success {
+color: #28a745 !important; /* Texte vert */
 }
 
-/* Changer la couleur de fond au survol */
-.list-group-item:hover {
-  background-color: #ffffff !important; /* Fond légèrement plus clair au survol */
-  color: #000000 !important; /* Texte noir au survol */
+.list-group-item.bg-dark {
+background-color: #000 !important; /* Fond noir pour chaque élément */
 }
 
-.list-group-item i:hover {
-  color: white !important; /* Icône en blanc au survol */
+.list-group-item.text-success {
+color: #28a745 !important; /* Texte vert pour chaque élément */
 }
 
-/* Pagination */
-.pagination button {
-  padding: 5px 10px;
-  margin: 5px;
-  border: none;
-  background-color: #00FF47;
-  color: white;
-  cursor: pointer;
+.border-secondary {
+border-color: #6c757d !important; /* Bordure grise */
 }
 
-.pagination button:disabled {
-  background-color: #ffffff;
-  cursor: not-allowed;
+#graph{
+width: 100%;
 }
-
-.pagination button:hover {
-  background-color: white;
-  color: #00FF47;
-}
-
-/* Styles supplémentaires */
-.bi {
-  color: #00FF47; /* Couleur des icônes */
-}
-
-/* Pour le texte des paragraphes et autres éléments */

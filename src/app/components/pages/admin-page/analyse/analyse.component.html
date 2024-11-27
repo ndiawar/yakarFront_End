@@ -1,73 +1,90 @@
 <div class="container-fluid">
-    <div class="row">
-      <!-- Graphique -->
-    <div class="col-md-8">
-      <div class="card card-moyenne">
-        <div class="card-header text-center">
-          <h4>La température et l’humidité moyenne de la journée</h4>
+  <div class="row">
+    <!-- Graphique -->
+    <div class="col-md-6 bg-dark">
+      <!-- Carte pour les paramètres -->
+      <div class="card mb-3 bg-dark text-light">
+        <div class="card-header text-center text-light text-success">
+          <h4>Choisissez les paramètres</h4>
         </div>
-        <div class="card-body">
-          <div>
-            <!-- Sélecteur pour choisir la période -->
-            <select class="bg-dark text-success" id="period" [(ngModel)]="activeFilter" aria-label="period" (change)="onFilterChange()">
-              <option value="daily">Moyenne Journalière</option>
-              <option value="weekly">Moyenne Hebdomadaire</option>
+        <div class="card-body bg-dark">
+          <div class="form-group text-light text-success">
+            <label for="year">Année :</label>
+            <select id="year" [(ngModel)]="selectedYear" (change)="updateChart()" class="form-control">
+              <option *ngFor="let year of [2023, 2024, 2025]">{{ year }}</option>
             </select>
           </div>
-          
-          <!-- Canvas pour afficher le graphique -->
-          <canvas #chartCanvas></canvas>
-          
-          <!-- Affichage d'un message d'erreur -->
-          <div *ngIf="errorMessage" class="error-message text-white">{{ errorMessage }}</div>
-          
-          <!-- Indicateur de chargement -->
-          <div *ngIf="loading" class="loading-message text-white">Chargement...</div>
-          
-          <!-- Affichage des données du mois en cours avec pagination -->
-        
-          
-        </div>
-      </div>
-    </div>  
-      <!-- Liste -->
-      <div class="col-md-4">
-        <div class="card list-group">
-          <div class="card-body">
-            <div class="list-group">
-              <p *ngFor="let item of currentMonthData" class="list-group-item list-group-item-action bg-dark">
-                <!-- Affichage conditionnel pour température ou humidité -->
-                <i class="bi" [ngClass]="{
-                    'bi-cloud-rain': item.humidite !== undefined,
-                    'bi-thermometer': item.temperature !== undefined
-                  }"></i>
-  
-                <!-- Température ou humidité -->
-                <ng-container *ngIf="item.temperature !== undefined">
-                  Température Magasin : {{ item.temperature }}°C à {{ item.heure }}
-                </ng-container>
-  
-                <ng-container *ngIf="item.humidite !== undefined">
-                  Magasin est humide : {{ item.humidite }}% à {{ item.heure }}
-                </ng-container>
-              </p>
-            </div>
+          <div class="form-group text-light text-success">
+            <label for="month">Mois :</label>
+            <select id="month" [(ngModel)]="selectedMonth" (change)="updateChart()" class="form-control">
+              <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">{{ month }}</option>
+            </select>
+          </div>
+          <div class="form-group text-light text-success">
+            <label for="week">Semaine :</label>
+            <select id="week" [(ngModel)]="selectedWeek" (change)="updateChart()" class="form-control">
+              <option *ngFor="let week of [1, 2, 3, 4]">{{ week }}</option>
+            </select>
           </div>
         </div>
-  
+      </div>
+
+      <!-- Carte pour le graphique -->
+      <div class="card bg-dark text-light text-success">
+        <div class="card-header text-center text-light text-success">
+          <h4>La température et l’humidité moyenne de la semaine</h4>
+        </div>
+        <div class="card-body ">
+          <canvas id="chartCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste des données -->
+    <div class="col-md-6">
+      <div class="card bg-dark text-light">
+        <div class="card-header text-center text-success">
+          <h4>Liste des données</h4>
+        </div>
+        <div class="card-body">
+          <div *ngIf="groupedData.length === 0" class="text-center text-success">
+            Aucune donnée disponible.
+          </div>
+          <div class="list-group" *ngIf="groupedData.length > 0">
+            <p
+              *ngFor="let data of groupedData"
+              class="list-group-item bg-dark text-success border-secondary"
+            >
+              <span><i class="bi bi-calendar"></i> <strong>Date :</strong> {{ data.date }}</span><br />
+              <span><i class="bi bi-clock"></i> <strong>Heure :</strong> {{ data.heure }}</span><br />
+              <span><i class="bi bi-thermometer"></i> <strong>Température :</strong> {{ data.temperature }} °C</span><br />
+              <span><i class="bi bi-cloud-rain"></i> <strong>Humidité :</strong> {{ data.humidite }} %</span>
+            </p>
+          </div>
+        </div>
+
         <!-- Pagination -->
-        <div class="pagination mt-3">
-          <!-- Flèche de gauche -->
-          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="btn btn-link" title="Page précédente">
+        <div class="text-center mt-3">
+          <button
+            class="btn btn-link text-success"
+            title="Page précédente"
+            [disabled]="page <= 1"
+            (click)="previousPage()"
+          >
             <i class="bi bi-arrow-left"></i>
           </button>
-  
-          <!-- Flèche de droite -->
-          <button (click)="goToPage(currentPage + 1)" class="btn btn-link" title="Page suivante">
+          <span class="text-success">Page {{ page }}</span>
+          <button
+            class="btn btn-link text-success"
+            title="Page suivante"
+            [disabled]="groupedData.length < limit"
+            (click)="nextPage()"
+          >
             <i class="bi bi-arrow-right"></i>
           </button>
         </div>
       </div>
     </div>
+
   </div>
-  
+</div>
