@@ -13,7 +13,7 @@ export class SocketService {
 
   constructor(private appRef: ApplicationRef) {
     // Initialisation du socket sans connexion immédiate
-    this.socket = io('http://localhost:5001', { autoConnect: false });
+    this.socket = io('http://localhost:5000', { autoConnect: false });
 
     // Attendre que l'application soit stable avant de connecter le WebSocket
     this.appRef.isStable
