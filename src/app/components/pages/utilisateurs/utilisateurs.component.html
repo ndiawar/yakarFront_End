@@ -37,22 +37,23 @@
   <div class="row">
     <div class="col-md-12">
         <div class="toolbar-container mb-2">
-          <!-- Recherche -->
+          <!-- Recherche -->  
           <div class="search-container">
             <input
               type="text"
               placeholder="🔍 Rechercher..."
               [(ngModel)]="searchTerm"
               class="search-input"
+              (input)="onSearch()"
             />
           </div>
           <!-- Filtre par rôle -->
-          <div class="filter-container">
+          <!-- <div class="filter-container">
             <select [(ngModel)]="selectedRole" class="filter-select" aria-label="select filter">
               <option value="">Tous les rôles</option>
               <option *ngFor="let role of uniqueRoles" [value]="role">{{ role }}</option>
             </select>
-          </div>
+          </div> -->
           <!-- Bouton d'action -->
           <button class="ajout-button" (click)="openModal()">
             ➕ Ajouter un utilisateur
@@ -89,12 +90,16 @@
                               [(ngModel)]="newUser.name"
                               name="name"
                               required
+                              minlength="3"
                               #name="ngModel"
+                              [ngClass]="{ 'is-invalid': name.invalid && name.touched, 'is-valid': name.valid && name.touched }"
                             />
                           </div>
-                          <small *ngIf="name.invalid && name.touched" class="text-danger">Ce champ est obligatoire</small>
+                          <small *ngIf="name.invalid && name.touched" class="text-danger">
+                            {{ getErrorMessage(name, 'name') }}
+                          </small>
                         </div>
-          
+                        
                         <!-- Champ Email -->
                         <div class="form-group mb-3">
                           <div class="input-group">
@@ -108,12 +113,15 @@
                               [(ngModel)]="newUser.email"
                               name="email"
                               required
+                              email
                               #email="ngModel"
+                              [ngClass]="{ 'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched }"
                             />
                           </div>
-                          <small *ngIf="email.invalid && email.touched" class="text-danger">Ce champ est obligatoire</small>
-                        </div>
-          
+                          <small *ngIf="email.invalid && email.touched" class="text-danger">
+                            {{ getErrorMessage(email, 'email') }}
+                          </small>
+                        </div>                        
                         <!-- Champ Téléphone -->
                         <div class="form-group mb-3">
                           <div class="input-group">
@@ -127,12 +135,17 @@
                               [(ngModel)]="newUser.telephone"
                               name="telephone"
                               required
+                              pattern="^(70|75|76|77|78)[0-9]{7}$"
                               #telephone="ngModel"
+                              [ngClass]="{ 'is-invalid': telephone.invalid && telephone.touched, 'is-valid': telephone.valid && telephone.touched }"
                             />
                           </div>
-                          <small *ngIf="telephone.invalid && telephone.touched" class="text-danger">Téléphone est obligatoire</small>
-                        </div>
-          
+                          <small *ngIf="telephone.invalid && telephone.touched" class="text-danger">
+                            {{ telephone.errors?.['pattern']
+                              ? 'Le téléphone doit commencer par 70, 75, 76, 77 ou 78 et avoir 9 chiffres.'
+                              : 'Téléphone est obligatoire.' }}
+                          </small>                    
+                        </div>                        
                         <!-- Champ Adresse -->
                         <div class="form-group mb-3">
                           <div class="input-group">
@@ -188,12 +201,19 @@
                               [(ngModel)]="newUser.password"
                               name="password"
                               required
+                              minlength="8"
+                              pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$"
                               #password="ngModel"
+                              [ngClass]="{ 'is-invalid': password.invalid && password.touched, 'is-valid': password.valid && password.touched }"
                             />
                           </div>
-                          <small *ngIf="password.invalid && password.touched" class="text-danger">Le mot de passe est obligatoire</small>
+                          <small *ngIf="password.invalid && password.touched" class="text-danger">
+                            {{ password.errors?.['pattern']
+                              ? 'Le mot de passe doit inclure une majuscule, un chiffre et un caractère spécial.'
+                              : 'Le mot de passe est obligatoire.' }}
+                          </small>                          
                         </div>
-          
+                        
                         <!-- Bouton Inscrire -->
                         <div class="text-center">
                           <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid || isSubmitting">
@@ -207,6 +227,8 @@
               </div>
             </div>
           </ng-template>
+          <!-- Modal de mise à jour d'utilisateur -->
+          
           <!-- Modal de mise à jour d'utilisateur -->
           <ng-template #updateModal>
             <div class="modal-dialog modal-dialog-centered w-100 modal-lg">
@@ -239,10 +261,14 @@
                               [(ngModel)]="userToEdit.name"
                               name="name"
                               required
+                              minlength="3"
                               #name="ngModel"
+                              [ngClass]="{ 'is-invalid': name.invalid && name.touched, 'is-valid': name.valid && name.touched }"
                             />
                           </div>
-                          <small *ngIf="name.invalid && name.touched" class="text-danger">Ce champ est obligatoire</small>
+                          <small *ngIf="name.invalid && name.touched" class="text-danger">
+                            {{ getErrorMessage(name, 'name') }}
+                          </small>
                         </div>
 
                         <!-- Champ Email -->
@@ -258,10 +284,14 @@
                               [(ngModel)]="userToEdit.email"
                               name="email"
                               required
+                              email
                               #email="ngModel"
+                              [ngClass]="{ 'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched }"
                             />
                           </div>
-                          <small *ngIf="email.invalid && email.touched" class="text-danger">Ce champ est obligatoire</small>
+                          <small *ngIf="email.invalid && email.touched" class="text-danger">
+                            {{ getErrorMessage(email, 'email') }}
+                          </small>
                         </div>
 
                         <!-- Champ Téléphone -->
@@ -277,10 +307,16 @@
                               [(ngModel)]="userToEdit.telephone"
                               name="telephone"
                               required
+                              pattern="^(70|75|76|77|78)[0-9]{7}$"
                               #telephone="ngModel"
+                              [ngClass]="{ 'is-invalid': telephone.invalid && telephone.touched, 'is-valid': telephone.valid && telephone.touched }"
                             />
                           </div>
-                          <small *ngIf="telephone.invalid && telephone.touched" class="text-danger">Téléphone est obligatoire</small>
+                          <small *ngIf="telephone.invalid && telephone.touched" class="text-danger">
+                            {{ telephone.errors?.['pattern']
+                              ? 'Le téléphone doit commencer par 70, 75, 76, 77 ou 78 et avoir 9 chiffres.'
+                              : 'Téléphone est obligatoire.' }}
+                          </small>
                         </div>
 
                         <!-- Champ Adresse -->
@@ -299,8 +335,31 @@
                               #adresse="ngModel"
                             />
                           </div>
-                          <small *ngIf="adresse.invalid && adresse.touched" class="text-danger">L'adresse est obligatoire</small>
+                          <small *ngIf="adresse.invalid && adresse.touched" class="text-danger">
+                            L'adresse est obligatoire
+                          </small>
                         </div>
+
+                        <!-- Champ Photo -->
+                        <div class="form-group mb-3">
+                          <div class="input-group">
+                            <span class="input-group-text bg-white text-dark">
+                              <i class="bi bi-image"></i>
+                            </span>
+                            <input
+                              type="file"
+                              class="form-control"
+                              accept="image/*"
+                              (change)="onPhotoSelected($event)"
+                              name="photo"
+                              aria-label="photo"
+                            />
+                          </div>
+                          <small *ngIf="!photoFile && photoPreview && photoPreview.length === 0" class="text-danger">
+                            Veuillez choisir une photo valide
+                          </small>
+                        </div>
+
                         <!-- Bouton Mettre à jour -->
                         <div class="text-center">
                           <button type="submit" class="btn btn-success w-100" [disabled]="updateForm.invalid || isLoading">
@@ -352,11 +411,27 @@
                 ✏️
               </button>
               <button
-                class="btn btn-danger btn-sm action-button"
-                (click)="onDeleteUser(user._id)" 
-              >
-                🗑️
-              </button>
+  class="btn btn-danger btn-sm action-button"
+  (click)="openConfirmDeleteModal(user)"
+>
+  🗑️
+</button>
+<!-- Modal de confirmation de suppression -->
+<ng-template #confirmDeleteModal>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <strong>Êtes-vous sûr de vouloir supprimercet utilisateur {{user.name}}  ?</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
               <label class="switch">
                 <input
                   type="checkbox"
