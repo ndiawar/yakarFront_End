@@ -109,7 +109,7 @@ export class UtilisateursComponent implements OnInit {
   fetchUsers(activeOnly: boolean = true): void {
     this.isLoading = true;
     this.errorMessage = null;
-
+    this.loadUsers();
     this.userApiService
       .fetchUsers(activeOnly)
       .then((users) => {
@@ -191,6 +191,7 @@ export class UtilisateursComponent implements OnInit {
       .registerUser(user)
       .then((data) => {
         console.log('Utilisateur inscrit avec succès:', data);
+        this.fetchUsers();
         this.users.push(data.user);
         this.updatePagination();
         this.closeModal();
@@ -279,6 +280,7 @@ export class UtilisateursComponent implements OnInit {
       this.onDeleteUser(this.userToDelete._id);
     }
     this.closeDeleteModal();
+    this.fetchUsers();
   }
 
   onDeleteUser(userId: string): void {
@@ -291,6 +293,7 @@ export class UtilisateursComponent implements OnInit {
           this.users[index].status = updatedUser.status;
         }
         console.log('Utilisateur désactivé avec succès.');
+        this.fetchUsers();
       })
       .catch((error) => {
         console.error('Erreur lors de la désactivation de l\'utilisateur :', error);
