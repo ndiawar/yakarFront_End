@@ -6,8 +6,9 @@ body {
   border-radius: 8px;
   height: 100%;
 }
-
-
+strong {
+  color: red;
+}
 .stats-container {
   display: flex;
   justify-content: space-between;
