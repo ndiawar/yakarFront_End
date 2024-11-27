@@ -45,7 +45,8 @@
 .navbar .ms-auto {
   display: flex;
   align-items: center;
-  position: relative;
+ 
+  
 }
 
 /* Pour le bouton de bascule de mode */
@@ -62,3 +63,4 @@
   height: 40px;
   margin-right: 10px;
 }
+

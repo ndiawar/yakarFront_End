@@ -37,22 +37,23 @@
   <div class="row">
     <div class="col-md-12">
         <div class="toolbar-container mb-2">
-          <!-- Recherche -->
+          <!-- Recherche -->  
           <div class="search-container">
             <input
               type="text"
               placeholder="🔍 Rechercher..."
               [(ngModel)]="searchTerm"
               class="search-input"
+              (input)="onSearch()"
             />
           </div>
           <!-- Filtre par rôle -->
-          <div class="filter-container">
+          <!-- <div class="filter-container">
             <select [(ngModel)]="selectedRole" class="filter-select" aria-label="select filter">
               <option value="">Tous les rôles</option>
               <option *ngFor="let role of uniqueRoles" [value]="role">{{ role }}</option>
             </select>
-          </div>
+          </div> -->
           <!-- Bouton d'action -->
           <button class="ajout-button" (click)="openModal()">
             ➕ Ajouter un utilisateur
@@ -352,11 +353,31 @@
                 ✏️
               </button>
               <button
-                class="btn btn-danger btn-sm action-button"
-                (click)="onDeleteUser(user._id)" 
-              >
-                🗑️
-              </button>
+  class="btn btn-danger btn-sm action-button"
+  (click)="openConfirmDeleteModal(user)"
+>
+  🗑️
+</button>
+<!-- Modal de confirmation de suppression -->
+<ng-template #confirmDeleteModal>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer la suppression</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <strong>Êtes-vous sûr de vouloir supprimercet utilisateur {{user.name}}  ?</strong>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
               <label class="switch">
                 <input
                   type="checkbox"

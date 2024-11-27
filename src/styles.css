@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 /* Styles de base pour le body */
@@ -10,12 +11,14 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4; /* Fond clair par défaut */
   transition: background-color 0.3s, color 0.3s; /* Transition douce pour le changement de thème */
+  
 }
 
 /* Thème sombre */
 body.dark-theme {
   background-color: #111015;  /* Fond sombre */
   color: #ffffff;  /* Texte blanc */
+  
 }
 
 /* Header */
@@ -28,6 +31,7 @@ body.dark-theme {
 body.dark-theme .navbar {
   background-color: #111015;  /* Fond sombre pour le header */
   border-bottom: 1px solid #333;
+ 
 }
 
 .dropdown-menu {
