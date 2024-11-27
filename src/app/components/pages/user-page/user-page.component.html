@@ -15,9 +15,15 @@
                               <small class="ms-2 text-muted">Niveau actuel</small>
                           </div>
                           <div class="d-flex flex-row justify-content-between mt-3">
-                              <p class="mb-0">10:00 &nbsp; <br> <span class="highlight mt-2">15 %</span></p>
-                              <p class="mb-0">14:00 &nbsp; <br> <span class="highlight mt-2">...</span></p>
-                              <p>17:00 &nbsp; <br> <span class="highlight">...</span></p>
+                            <p class="mb-0">10:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getHumiditeAt('10:00') }}</span>
+                            </p>
+                            <p class="mb-0">14:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getHumiditeAt('14:00') }}</span>
+                            </p>
+                            <p class="mb-0">17:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getHumiditeAt('17:00') }}</span>
+                            </p>
                           </div>
                           <small class="text-white">
                               <i class="bi bi-droplet me-1 icon-green"></i> <!-- Icône goutte d'eau -->
@@ -38,9 +44,15 @@
                               <small class="ms-2 text-muted">Conditions actuelles</small>
                           </div>
                           <div class="d-flex flex-row justify-content-between mt-3">
-                              <p class="mb-0">10:00 &nbsp; <br> <span class="highlight mt-2">29 °C</span></p>
-                              <p class="mb-0">14:00 &nbsp; <br> <span class="highlight mt-2">...</span></p>
-                              <p>17:00 &nbsp; <br> <span class="highlight mt-2">...</span></p>
+                            <p class="mb-0">10:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getTemperatureAt('10:00') }}</span>
+                            </p>
+                            <p class="mb-0">14:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getTemperatureAt('14:00') }}</span>
+                            </p>
+                            <p class="mb-0">17:00 &nbsp; <br>
+                              <span class="highlight mt-2">{{ getTemperatureAt('17:00') }}</span>
+                            </p>
                           </div>
                           <small class="text-white">
                               <i class="bi bi-thermometer-half  text-white"></i> <!-- Icône pour Température -->
@@ -74,45 +86,8 @@
   </div>
 </div>
 
-<div class="container-fluid mt-5">
-  <div class="row">
-      <div class="col-md-4">
-          <div class="card list-group">
-              <div class="card-body">
-                  <div class="list-group bg-light">
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-cloud-rain"></i> Magasin est humide 24°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-thermometer"></i> Température Magasin est de 29°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-cloud-rain"></i> Magasin est humide 24°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-cloud-rain"></i> Magasin est humide 24°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-thermometer"></i> Température Magasin est de 29°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-cloud-rain"></i> Magasin est humide 24°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-cloud-rain"></i> Magasin est humide 24°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-thermometer"></i> Température Magasin est de 29°C à 11h00
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action bg-dark">
-                          <i class="bi bi-cloud-rain"></i> Magasin est humide 24°C à 11h00
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-8">
+
+      <div class="col-md-12">
           <app-analyse></app-analyse>
       </div>
-  </div>
-</div>
+

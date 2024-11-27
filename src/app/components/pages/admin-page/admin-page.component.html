@@ -11,8 +11,11 @@
                             <p class="card-text">Bienvenue à la maison, il est humide au magasin.</p>
                         </div>
                         <div>
-                            <span class="d-block fs-4">{{currentDateTime}}</span>
-                            <span class="fs-3"><i class="bi bi-thermometer-half  text-white"></i>  - 15 %</span>
+                          <span class="d-block fs-4">{{currentDateTime}}</span>
+                          <span class="fs-3">
+                            <i class="bi bi-thermometer-half text-white"></i>
+                            {{temperature}} °C - {{humidite}} %
+                          </span>
                         </div>
                     </div>
                 </div>
@@ -87,13 +90,13 @@
                             <div class="d-flex align-items-center">
                                 <!-- Lumière (Lampe) -->
                                 <div class="d-flex flex-column align-items-center ms-5 me-3">
-                                    <div class="form-check form-switch me-5">
-                                        <!-- Case à cocher sans label mais avec attribut aria-label pour l'accessibilité -->
-                                        <input class="form-check-input fs-4" type="checkbox" id="lightSwitch" checked aria-label="Lumière" />
-                                    </div>
-                                    <div class="form-check form-switch me-5 mt-3">
-                                        <!-- Case à cocher sans label mais avec attribut aria-label pour l'accessibilité -->
-                                        <input class="form-check-input fs-4 " type="checkbox" id="fanSwitch" checked aria-label="Ventilateur" />
+
+                                    <div>
+                                      <label class="switch">
+                                        <input type="checkbox" [(ngModel)]="fanStatus" (change)="onFanToggle($event)">
+                                        <span class="slider"></span>
+                                      </label>
+                                      <p>{{ fanStatus ? 'Ventilateur allumé' : 'Ventilateur éteint' }}</p>
                                     </div>
                                 </div>
 
@@ -114,6 +117,6 @@
     </div>
 </div>
 
-<div class="container-fluid mt-5">
-    <app-analyse></app-analyse>
+<div class="col-md-12">
+  <app-analyse></app-analyse>
 </div>

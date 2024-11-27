@@ -3,6 +3,14 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Chart } from 'chart.js/auto';
+import { CapteurDataService } from '../../../../services/capteur-data.service';
+
+interface CapteurData {
+  date: string;
+  heure: string;
+  temperature: number | null;
+  humidite: number | null;
+}
 
 @Component({
   selector: 'app-analyse',
@@ -15,12 +23,17 @@ export class AnalyseComponent implements OnInit {
   selectedYear: number = new Date().getFullYear();
   selectedMonth: number = new Date().getMonth() + 1;
   selectedWeek: number = 1;
+  capteurDataList: any[] = [];
+  groupedData: { date: string; heure: string; temperature: number | null; humidite: number | null }[] = [];
+  page: number = 1;
+  limit: number = 5;
 
   chart: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private capteurDataService: CapteurDataService) {}
 
   ngOnInit(): void {
+    this.loadData();
     this.updateChart(); // On met à jour le graphique lors du chargement du composant
   }
 
@@ -100,5 +113,50 @@ export class AnalyseComponent implements OnInit {
         },
       },
     });
+  }
+
+  // Charger les données avec pagination
+  loadData() {
+    this.capteurDataService.getCapteurDatas(this.page, this.limit).subscribe(
+      (response: { data: CapteurData[] }) => {
+        this.capteurDataList = response.data;
+        this.groupByDateAndHour();
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des données:', error);
+      }
+    );
+  }
+
+  groupByDateAndHour() {
+    const grouped: { [key: string]: { date: string; heure: string; temperature: number | null; humidite: number | null } } = {};
+    this.capteurDataList.forEach((item: CapteurData) => {
+      const key = `${item.date}-${item.heure}`;
+      if (!grouped[key]) {
+        grouped[key] = { date: item.date, heure: item.heure, temperature: null, humidite: null };
+      }
+      if (item.temperature !== null) grouped[key].temperature = item.temperature;
+      if (item.humidite !== null) grouped[key].humidite = item.humidite;
+    });
+
+    this.groupedData = Object.values(grouped)
+      .filter((entry) => entry.temperature !== null && entry.humidite !== null)
+      .sort((a, b) => {
+        if (a.date > b.date) return -1;
+        if (a.date < b.date) return 1;
+        return a.heure > b.heure ? -1 : 1;
+      });
+  }
+
+  previousPage() {
+    if (this.page > 1) {
+      this.page--;
+      this.loadData();
+    }
+  }
+
+  nextPage() {
+    this.page++;
+    this.loadData();
   }
 }

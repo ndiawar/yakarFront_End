@@ -2,15 +2,15 @@
     border: none;
     border-radius: 10px;
   }
-  
+
   .bg-dark {
     background-color: #2b2b2b !important;
   }
-  
+
   .text-white {
     color: #fff !important;
   }
-  
+
   .main-card {
     background-image: url('/assets/images/humide.png'); /* Remplacez 'background.jpg' par le chemin vers votre image */
     background-size: cover; /* L'image couvre tout le conteneur */
@@ -19,7 +19,7 @@
     border-radius: 10px;
     min-height: 300px; /* Définissez une hauteur minimale */
   }
-  
+
   .main-card .card-body {
     background: rgba(0, 0, 0, 0.425); /* Ajoute un effet d'ombre */
     border-radius: 10px;
@@ -36,20 +36,20 @@
   .card-body h6 {
     font-size: 1rem; /* Taille pour le titre */
   }
-  
+
   .card-body .d-flex i {
     font-size: 1.2rem; /* Taille des icônes */
   }
-  
+
   .card-body small {
     font-size: 0.8rem; /* Taille pour le texte en petit */
     color: #bbb; /* Couleur gris clair */
   }
-  
+
   .me-2 {
     margin-right: 8px; /* Espacement à droite des icônes */
   }
-  
+
   .ms-2 {
     margin-left: 8px; /* Espacement à gauche du texte en <small> */
   }
@@ -57,7 +57,7 @@
     color: #17fc58; /* Couleur verte */
     font-size: 1.2rem; /* Ajustez la taille si nécessaire */
   }
-  
+
   /* Changer la couleur de la case à cocher en rouge quand elle est cochée */
 .form-check-input:checked {
     background-color: red;
@@ -78,4 +78,71 @@
 .d-flex {
     display: flex;
     align-items: center;
+}
+
+/* app.component.css */
+.d-block {
+  display: block;
+}
+
+.fs-4 {
+  font-size: 1.25rem;
+}
+
+.fs-3 {
+  font-size: 1.5rem;
+}
+
+.text-white {
+  color: white;
+}
+
+.bi-thermometer-half {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+/* Style de l'interrupteur */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; /* Couleur quand activé */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px); /* Déplacement du bouton */
 }

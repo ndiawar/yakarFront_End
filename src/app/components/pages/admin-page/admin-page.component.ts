@@ -3,20 +3,28 @@ import { AnalyseComponent } from './analyse/analyse.component';
 import { UserService } from '../../../services/user.service';
 import { CapteurDataService } from '../../../services/capteur-data.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';  // Importez FormsModule
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [AnalyseComponent],
+  imports: [AnalyseComponent, CommonModule,FormsModule],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.css'
 })
 export class AdminPageComponent implements OnInit{
+  fanStatus: boolean = false;
   user: any;
   currentDateTime: string = '';
   temperatureData: any[] = [];  // Pour stocker les données de température récupérées
   humiditeData: any[] = []; //
   errorMessage: string = '';
+  temperature: number = 0;
+  humidite: number = 0;
 
 
   constructor(private userService: UserService, private capteurDataService: CapteurDataService, private cdr: ChangeDetectorRef){}
@@ -25,7 +33,19 @@ export class AdminPageComponent implements OnInit{
     this.user = this.userService.getCurrentUser();
     this.updateDateTime();
     this.fetchLastDayData();
+
+    // Récupérer les données de l'API au démarrage du composant
+    this.capteurDataService.getCapteurData().subscribe((data) => {
+      // Prenez le dernier enregistrement de la journée (ou un autre critère selon vos besoins)
+      const latestData = data[data.length - 1]; // ou une autre logique de filtrage pour l'heure actuelle
+      this.currentDateTime = `${latestData.date} ${latestData.heure}`;
+      this.temperature = latestData.temperature;
+      this.humidite = latestData.humidite;
+    });
+
   }
+
+
 
   updateDateTime(): void {
     const now = new Date();
@@ -81,6 +101,44 @@ export class AdminPageComponent implements OnInit{
     });
 
     return data ? `${data.humidite} %` : '...';
+  }
+
+  turnOnFan() {
+    this.capteurDataService.controlFan('ON').subscribe(
+      response => {
+        console.log('Ventilateur allumé:', response);
+      },
+      error => {
+        console.error('Erreur lors de l\'allumage du ventilateur:', error);
+      }
+    );
+  }
+
+  turnOffFan() {
+    this.capteurDataService.controlFan('OFF').subscribe(
+      response => {
+        console.log('Ventilateur éteint:', response);
+      },
+      error => {
+        console.error('Erreur lors de l\'extinction du ventilateur:', error);
+      }
+    );
+  }
+
+
+
+  // Méthode appelée lors du changement d'état du switch
+  onFanToggle(event: any): void {
+    const action = this.fanStatus ? 'ON' : 'OFF';  // 'ON' si true, 'OFF' si false
+
+    this.capteurDataService.controlFan(action).subscribe(
+      response => {
+        console.log(`Ventilateur ${action === 'ON' ? 'allumé' : 'éteint'}`, response);
+      },
+      error => {
+        console.error('Erreur lors du contrôle du ventilateur:', error);
+      }
+    );
   }
 
 }

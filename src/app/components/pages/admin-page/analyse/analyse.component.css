@@ -1,74 +1,50 @@
-/* canvas {
-    width: 100% !important;
-    height: 400px !important;
-  } */
-  .card-moyenne {
-    background-color: #2b2b2b;
-  }
-  .list-group {
-    background-color: #2b2b2b;
-  }
-  .list-group-item i {
-    margin-right: 10px;
-  }
 
-  h4 {
-    color: #00FF47;
-  }
+canvas {
+  margin-top: 20px;
+  border-radius: 10px; /* Coins arrondis */
+  background-color: #1e1e1e; /* Fond du graphique */
+  color: white; /* Texte blanc */
 
+}
 
+.chart-container {
+  height: 400px;
+  width: 100%;
+}
 
-  /* /* Assurez-vous que le canvas a une hauteur et une largeur appropriées */
+.card {
+margin-bottom: 20px;
+}
 
+.list-group-item {
+padding: 15px;
+border-radius: 5px;
+}
 
-/* Personnalisation des champs de sélection */
+.text-center {
+margin-top: 20px;
+}
 
+.bg-dark {
+background-color: #000 !important; /* Fond noir */
+}
 
-/* Adapter le card-body */
+.text-success {
+color: #28a745 !important; /* Texte vert */
+}
 
+.list-group-item.bg-dark {
+background-color: #000 !important; /* Fond noir pour chaque élément */
+}
 
-/* Si vous avez besoin de plus d'espacement entre les éléments de la carte */
+.list-group-item.text-success {
+color: #28a745 !important; /* Texte vert pour chaque élément */
+}
 
+.border-secondary {
+border-color: #6c757d !important; /* Bordure grise */
+}
 
-/* Pour rendre le formulaire plus joli */
-
-
-/* Pour que les éléments prennent la même largeur */
-
-/* canvas {
-    width: 100% !important;
-    height: 400px !important;
-  } */
-  .card-moyenne {
-    background-color: #2b2b2b;
-  }
-  .list-group {
-    background-color: #2b2b2b;
-  }
-  .list-group-item i {
-    margin-right: 10px;
-  }
-
-  h4 {
-    color: #00FF47;
-  }
-
-
-
-  /* /* Assurez-vous que le canvas a une hauteur et une largeur appropriées */
-
-
-/* Personnalisation des champs de sélection */
-
-
-/* Adapter le card-body */
-
-
-/* Si vous avez besoin de plus d'espacement entre les éléments de la carte */
-
-
-/* Pour rendre le formulaire plus joli */
-
-
-/* Pour que les éléments prennent la même largeur */
-
+#graph{
+width: 100%;
+}
