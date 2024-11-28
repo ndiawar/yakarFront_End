@@ -25,6 +25,7 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/login-email`, { email, password }).pipe(
       tap((response: any) => {
         if (response.user) {
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
         }
       })
@@ -42,16 +43,45 @@ export class UserService {
     );
   }
 
-  logout() {
-    // Nettoyer la session
-    sessionStorage.clear();
+  getCurrentUser(): any {
+    const user = this.currentUserSubject.value;
+    if (!user) {
+      const savedUser = localStorage.getItem('currentUser');
+      if (savedUser) {
+        this.currentUserSubject.next(JSON.parse(savedUser));
+      }
+    }
+    return this.currentUserSubject.value;
+  }
 
-    // Rediriger vers la page de login
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
-  getCurrentUser(): any {
-    return this.currentUserSubject.value;
+  // Changer le mot de passe
+  // Changer le mot de passe
+  changePassword(currentPassword: string, newPassword: string): Observable<any> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser || !currentUser.id) { // Vérifiez également si `id` est valide
+      console.error('Utilisateur non connecté ou ID manquant.');
+      throw new Error('Utilisateur non connecté.');
+    }
+    return this.http.post(`${this.apiUrl}/change-password`, {
+      userId: currentUser.id,
+      currentPassword,
+      newPassword,
+    });
+  }
+
+  updatePhoto(userId: string, photo: File) {
+    const currentUser = this.getCurrentUser();
+    const formData = new FormData();
+    formData.append('userId', currentUser.id);
+    formData.append('photo', photo);
+
+    return this.http.post(`${this.apiUrl}/update-photo`, formData);
   }
 
 }

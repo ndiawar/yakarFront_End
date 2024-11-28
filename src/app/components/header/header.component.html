@@ -3,38 +3,169 @@
   <div class="container-fluid">
     <!-- Logo Section -->
     <a class="navbar-brand" href="/">
-      <img
-        [src]="isDarkMode ? '/assets/images/logo_dark.png' : '/assets/images/logo.png'"
-        alt="Logo"
-        class="logo-image">
+      <img [src]="isDarkMode ? '/assets/images/logo_dark.png' : '/assets/images/logo.png'" alt="Logo" class="logo-image">
     </a>
 
-    <!-- Navigation Section (partie utilisateur et mode toggle) -->
-    <div class="ms-auto d-flex align-items-center">
-      <!-- Mode Toggle Section (aligné à droite) -->
-      <div class="mode d-flex align-items-center px-3" (click)="toggleTheme()">
-        <i id="themeIcon" class="bi" [ngClass]="isDarkMode ? 'bi-moon-fill' : 'bi-sun-fill'"></i>
-        <span class="ms-2"></span>
-      </div>
+    <!-- User Profile and Dropdown -->
+    <div class="dropdown d-flex align-items-center">
+      <a class="d-flex align-items-center text-decoration-none" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <img [src]="user.photo ? user.photo : '/assets/images/avatar.png'" alt="User Avatar" class="rounded-circle user-avatar">
+        <div>
+          <span class="d-block" [ngClass]="isDarkMode ? '' : 'text-dark'">{{user.name}}</span>
+          <small [ngClass]="isDarkMode ? 'text-white' : 'text-dark'">{{user.role}}</small>
+        </div>
+      </a>
 
-      <!-- User Profile and Dropdown -->
-      <div class="dropdown d-flex align-items-center">
-        <a class="d-flex align-items-center text-decoration-none" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="/assets/images/avatar.png" alt="User Avatar" class="rounded-circle user-avatar">
-          <div>
-            <span class="d-block" [ngClass]="isDarkMode ? '' : 'text-dark'">{{user.name}}</span>
-            <small [ngClass]="isDarkMode ? 'text-white' : 'text-dark'">{{user.role}}</small>
-          </div>
-        </a>
-
-        <!-- Dropdown Menu -->
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" href="#">Déconnexion</a></li>
-        </ul>
-      </div>
+      <!-- Dropdown Menu -->
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" href="#" (click)="toggleModal($event)">Profile</a></li> <!-- Appel à la fonction toggleModal -->
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+      </ul>
     </div>
   </div>
 </nav>
 <!-- Header End -->
+
+<!-- Modal Profile -->
+<div *ngIf="isModalVisible" class="modal fade show" style="display: block;" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profileModalLabel">Profil de l'utilisateur</h5>
+        <button type="button" class="btn-close" (click)="toggleModal($event)" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Message d'erreur ou de succès -->
+        <div *ngIf="changePasswordMessage" class="mb-3">
+          <div
+            [class]="'alert alert-' + changePasswordMessage.type"
+            role="alert"
+          >
+            {{ changePasswordMessage.text }}
+          </div>
+        </div>
+        <div class="text-center">
+          <img
+            [src]="user.photo ? user.photo : '/assets/images/avatar.png'"
+            alt="User Photo"
+            class="rounded-circle"
+            style="width: 100px; height: 100px;"
+          />
+          <div>
+            <input
+              type="file"
+              #photoInput
+              (change)="onPhotoSelected($event)"
+              accept="image/*"
+              hidden
+            />
+            <button
+              class="btn btn-light mt-2"
+              (click)="openFileSelector()"
+            >
+              <i class="fa fa-pencil"></i> Changer la photo
+            </button>
+          </div>
+        </div>
+        <p><strong>Nom:</strong> {{ user.name }}</p>
+        <p><strong>Adresse:</strong> {{ user.adresse }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Code Secret:</strong> {{ user.secretCode }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+        <button class="btn btn-primary mt-3" (click)="togglePasswordModal()">Changer votre mot de passe</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Change Password -->
+<div
+  *ngIf="isPasswordModalVisible"
+  class="modal fade show"
+  style="display: block;"
+  tabindex="-1"
+  aria-labelledby="passwordModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordModalLabel">Changer le mot de passe</h5>
+        <button type="button" class="btn-close" (click)="togglePasswordModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()">
+          <!-- Mot de passe actuel -->
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label">Mot de passe actuel</label>
+            <input
+              type="password"
+              class="form-control"
+              id="currentPassword"
+              formControlName="currentPassword"
+              [ngClass]="{'is-invalid': isInvalid('currentPassword')}"
+            />
+            <div *ngIf="isInvalid('currentPassword')" class="invalid-feedback">
+              Ce champ est requis.
+            </div>
+          </div>
+
+          <!-- Nouveau mot de passe -->
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">Nouveau mot de passe</label>
+
+              <input
+                [type]="showNewPassword ? 'text' : 'password' "
+                class="form-control"
+                id="newPassword"
+                formControlName="newPassword"
+                [ngClass]="{'is-invalid': isInvalid('newPassword')}"
+
+              />
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="toggleNewPasswordVisibility()"
+                 tabindex="-1">
+
+              </button>
+              <i [class]="showNewPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+
+            <div *ngIf="isInvalid('newPassword')" class="invalid-feedback">
+              Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre, et un caractère spécial.
+            </div>
+          </div>
+
+          <!-- Confirmation du mot de passe -->
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmez le mot de passe</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              [ngClass]="{'is-invalid': isInvalid('confirmPassword') || !passwordsMatch}"
+            />
+            <div *ngIf="isInvalid('confirmPassword')" class="invalid-feedback">
+              Ce champ est requis.
+            </div>
+            <div *ngIf="!passwordsMatch" class="invalid-feedback">
+              Les mots de passe ne correspondent pas.
+            </div>
+          </div>
+
+          <!-- Bouton de soumission -->
+          <button type="submit" class="btn btn-primary" [disabled]="changePasswordForm.invalid || !passwordsMatch">
+            Changer le mot de passe
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

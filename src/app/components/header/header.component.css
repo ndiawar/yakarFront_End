@@ -62,3 +62,84 @@
   height: 40px;
   margin-right: 10px;
 }
+/* Styles pour le modal */
+.modal-content {
+  color: #333; /* Texte en gris foncé pour le rendre lisible sur fond clair */
+}
+
+/* Spécifique pour le fond sombre */
+.modal-body {
+  color: #333; /* Texte sombre pour le modal */
+}
+
+.modal-header {
+  background-color: #f8f9fa; /* Fond clair pour l'entête du modal */
+  color: #333; /* Texte en noir pour la lisibilité */
+}
+
+.modal-footer {
+  background-color: #f8f9fa; /* Fond clair pour le footer du modal */
+  color: #333; /* Texte en noir pour la lisibilité */
+}
+
+button {
+  color: #fff;
+  background-color: #007bff;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875em;
+}
+
+.position-relative {
+  position: relative;
+}
+.position-absolute {
+  position: absolute;
+  z-index: 2;
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.input-group .btn {
+  border: none;
+  background: transparent;
+  padding: 0 10px;
+}
+
+.input-group .btn i {
+  font-size: 1.2rem;
+  color: #6c757d; /* Couleur de l'icône */
+  cursor: pointer;
+}
+
+.input-group .btn:hover i {
+  color: #000; /* Changement de couleur au survol */
+}
+
+.alert {
+  font-size: 0.9rem;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.alert-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
