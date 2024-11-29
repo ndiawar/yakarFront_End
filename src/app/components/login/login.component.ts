@@ -170,7 +170,6 @@ export class LoginComponent implements AfterViewInit {
         (response) => {
           console.log('Connexion réussie:', response);
           this.errorMessage = ''; // Réinitialise le message d'erreur en cas de succès
-          alert('Connexion réussie !');
 
           // Vérifie et utilise le rôle retourné par le backend
           if (response.user.role === 'admin') {
