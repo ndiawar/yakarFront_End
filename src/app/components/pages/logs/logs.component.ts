@@ -15,7 +15,7 @@ export class LogsComponent implements OnInit {
   logs: any[] = []; // Liste complète des logs
   paginatedLogs: any[] = []; // Logs paginés
   currentPage = 1; // Page courante
-  pageSize = 5; // Nombre d'éléments par page
+  pageSize = 15; // Nombre d'éléments par page
   searchTerm = ''; // Filtre de recherche
   sortKey = ''; // Clé de tri (date, heure, action, id_users)
   sortOrder: 'asc' | 'desc' = 'asc'; // Ordre de tri

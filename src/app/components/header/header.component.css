@@ -143,3 +143,148 @@ button:hover {
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+/* Style pour la zone de chargement */
+#loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  color: #00796b;
+}
+
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+  border-width: 0.3em;
+}
+
+/* Style général du formulaire */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #00796b;
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+/* Style des champs de saisie */
+input.form-control {
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+input.form-control:focus {
+  border-color: #00796b;
+  box-shadow: 0 0 3px rgba(0, 123, 123, 0.5);
+}
+
+.input-group {
+  margin-bottom: 10px;
+}
+
+/* Icones d'affichage/massage de mot de passe */
+.input-group-text {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 8px;
+}
+
+.input-group-text i {
+  color: #00796b;
+  font-size: 16px;
+}
+
+/* Style des messages d'erreur et de succès */
+.text-danger {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.alert {
+  padding: 8px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+.alert-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.alert-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button {
+  padding: 10px 25px;
+  font-size: 14px;
+  border-radius: 20px;
+  background-color: #00796b;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover:enabled {
+  background-color: #004d40;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Animation pour le bouton de soumission */
+button[type="submit"]:hover {
+  transform: scale(1.05);
+}
+
+/* Réponse visuelle du champ de mot de passe */
+.input-group input.is-invalid {
+  border-color: #f44336;
+}
+
+.input-group input.is-valid {
+  border-color: #28a745;
+}
+/* Icône de l'œil (pour afficher/masquer le mot de passe) */
+.input-group-text i {
+  color: #00796b; /* couleur de l'icône, verte comme le thème */
+  font-size: 16px;
+}
+
+.input-group-text {
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  padding: 8px;
+}
+
+.input-group-text i {
+  color: #00796b; /* couleur de l'icône en vert */
+}
+
+/* Lorsque l'icône de l'œil est masqué (eye-slash), conserver la couleur verte */
+.input-group-text i.fas.fa-eye-slash {
+  color: #00796b; /* même couleur pour l'icône barrée */
+}

@@ -1,30 +1,22 @@
-<nav class="menu">
+<nav class="menu ">
   <ul>
-    <li><a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Admin</a></li>
-
-    <li><a routerLink="/utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a></li>
-    <li><a routerLink="/logs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Logs</a></li>
-  </ul>
-</nav>
-<nav class="menu">
-  <ul>
-    <!-- Menu utilisateur (visible pour les utilisateurs non-admin) -->
-    <li *ngIf="isLoggedIn && !isAdmin">
-      <a routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">User</a>
+    <!-- Lien Admin (visible uniquement si l'utilisateur est admin) -->
+    <li *ngIf="isAdmin">
+      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard Admin</a>
     </li>
-  </ul>
-</nav>
-
-<nav class="menu">
-  <ul>
-    <!-- Menu Administrateur -->
-    <li *ngIf="isLoggedIn && isAdmin">
-      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Admin</a>
+    
+    <!-- Lien User (visible uniquement si l'utilisateur est connecté en tant que user) -->
+    <li *ngIf="isUser">
+      <a routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard User</a>
     </li>
-    <li *ngIf="isLoggedIn && isAdmin">
+
+    <!-- Lien Utilisateurs (visible uniquement pour les admins) -->
+    <li *ngIf="isAdmin">
       <a routerLink="/utilisateurs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Utilisateurs</a>
     </li>
-    <li *ngIf="isLoggedIn && isAdmin">
+
+    <!-- Lien Logs (visible uniquement pour les admins) -->
+    <li *ngIf="isAdmin">
       <a routerLink="/logs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Logs</a>
     </li>
   </ul>

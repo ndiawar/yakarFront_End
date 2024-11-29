@@ -1,5 +1,5 @@
 <!-- Header Start -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg ">
   <div class="container-fluid">
     <!-- Logo Section -->
     <a class="navbar-brand" href="/">
@@ -18,10 +18,11 @@
 
       <!-- Dropdown Menu -->
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-        <li><a class="dropdown-item" href="#" (click)="toggleModal($event)">Profile</a></li> <!-- Appel à la fonction toggleModal -->
+        <li><a class="dropdown-item" href="#" (click)="toggleModal($event)">Profile</a></li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+        <li><a class="dropdown-item" href="#" (click)="logout()">Déconnexion</a></li>
       </ul>
+      
     </div>
   </div>
 </nav>

@@ -1,9 +1,13 @@
+import { config } from './../app.config.server';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { Router } from '@angular/router'; // Importez le Router
 import { HttpClientModule } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import axios from '../config/axios-config'; // Importer l'instance Axios configurée
+import { catchError, map } from 'rxjs/operators'; // Importation des opérateurs RxJS
+
 
 
 @Injectable({
@@ -43,37 +47,102 @@ export class UserService {
     );
   }
 
-  getCurrentUser(): any {
-    const user = this.currentUserSubject.value;
-    if (!user) {
-      const savedUser = localStorage.getItem('currentUser');
-      if (savedUser) {
-        this.currentUserSubject.next(JSON.parse(savedUser));
-      }
+ // Récupérer l'utilisateur actuel
+ getCurrentUser(): any {
+  const user = this.currentUserSubject.value;
+  if (!user) {
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+      this.currentUserSubject.next(JSON.parse(savedUser));
     }
-    return this.currentUserSubject.value;
   }
+  return this.currentUserSubject.value;
+}
+// Vérifie si l'utilisateur est connecté
+isLoggedIn(): boolean {
+  return !!this.getCurrentUser();
+}
 
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+// Vérifie si l'utilisateur est un admin
+isAdmin(): boolean {
+  const user = this.getCurrentUser();
+  return user && user.role === 'admin'; // Vérifie si le rôle est admin
+}
+
+// Vérifie si l'utilisateur est un user
+isUser(): boolean {
+  const user = this.getCurrentUser();
+  return user && user.role === 'user'; // Vérifie si le rôle est user
+}
+
+// Méthode de déconnexion
+logout() {
+  localStorage.removeItem('currentUser');
+  this.deleteAllCookies();
+  this.currentUserSubject.next(null);
+  this.router.navigate(['/login']);
+}
+
+// Supprime tous les cookies
+private deleteAllCookies() {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf('=');
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
   }
+}
 
+
+// Méthode pour gérer les erreurs de manière centralisée
+private handleError(error: any): Observable<never> {
+  let errorMessage = 'Une erreur est survenue';
+  if (error.response) {
+    // Erreur côté serveur
+    errorMessage = error.response.data.message || errorMessage;
+  } else if (error.message) {
+    // Erreur de type client
+    errorMessage = error.message;
+  }
+  // Retourner un Observable avec un message d'erreur
+  return new Observable(observer => {
+    observer.error(errorMessage);
+  });
+}
   // Changer le mot de passe
-  // Changer le mot de passe
-  changePassword(currentPassword: string, newPassword: string): Observable<any> {
-    const currentUser = this.getCurrentUser();
-    if (!currentUser || !currentUser.id) { // Vérifiez également si `id` est valide
-      console.error('Utilisateur non connecté ou ID manquant.');
-      throw new Error('Utilisateur non connecté.');
-    }
-    return this.http.post(`${this.apiUrl}/change-password`, {
-      userId: currentUser.id,
-      currentPassword,
-      newPassword,
+// Fonction pour changer le mot de passe de l'utilisateur
+changePassword(email: string, oldPassword: string, newPassword: string, confirmPassword: string): Observable<any> {
+  if (newPassword !== confirmPassword) {
+    return new Observable((observer) => {
+      observer.error({ message: 'Les nouveaux mots de passe ne correspondent pas.' });
     });
   }
+
+  const body = {
+    email: email,
+    oldPassword: oldPassword,
+    newPassword: newPassword,
+    confirmPassword: confirmPassword,
+  };
+
+  return from(
+    axios.post(`${this.apiUrl}/change-password`, body)
+      .then((response) => {
+        console.log('Mot de passe mis à jour avec succès:', response.data);
+        return response.data;
+      })
+  ).pipe(
+    map((response) => {
+      console.log('Réponse de l\'API:', response);  // Log de la réponse pour vérifier la structure
+      return response;  // Retourne la réponse si tout est correct
+    }),
+    catchError((error) => {
+      console.error('Erreur lors du changement de mot de passe:', error);
+      return this.handleError(error);  // Gestion de l'erreur
+    })
+  );
+}
 
   updatePhoto(userId: string, photo: File) {
     const currentUser = this.getCurrentUser();

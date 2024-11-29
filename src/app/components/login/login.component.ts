@@ -25,8 +25,6 @@ export class LoginComponent implements AfterViewInit {
   isCodeDisabled: boolean = false; // Désactive les champs si les tentatives sont épuisées
   isLoading: boolean = false;
 
-
-
   // Données utilisateur
   code: string[] = new Array(4).fill(''); // Tableau pour stocker les 4 chiffres du code secret
   codeDisplay: string[] = new Array(4).fill(''); // Tableau pour stocker l'affichage, avec * ou le chiffre
@@ -140,7 +138,6 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-
   handleInput(event: Event, index: number): void {
     const inputElement = event.target as HTMLInputElement;
 
@@ -204,7 +201,6 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-
   switchToEmailTab(): void {
     this.activeTab = 'email';
     const emailTabButton = document.querySelector<HTMLButtonElement>('#email-tab');
@@ -235,19 +231,13 @@ export class LoginComponent implements AfterViewInit {
     this.setFocusOnNextEmptyField();
   }
 
-
   ngOnDestroy(): void {
     this.socketService.disconnect();
   }
 
-
-
-
   get missingDigits(): number {
     return this.code.filter((digit) => !digit || digit.trim() === '').length;
   }
-
-
 
   // Fonction de redirection vers le dashboard approprié
   redirectToDashboard(role: string): void {
@@ -371,29 +361,6 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-  // Connexion avec email et mot de passe
-  // onEmailSubmit(): void {
-  //   this.validateEmail();
-
-  //   if (this.isEmailValid && this.emailExists) {
-  //     this.validatePassword();
-
-  //     if (this.isPasswordValid) {
-  //       this.authService
-  //         .login(this.email.trim().toLowerCase(), this.password)
-  //         .then((user) => this.handleLoginSuccess(user))
-  //         .catch((error) => this.handleLoginError(error));
-  //     } else {
-  //       this.passwordErrorMessage = 'Mot de passe incorrect.';
-  //     }
-  //   } else {
-  //     this.errorMessage = 'Veuillez corriger les erreurs avant de soumettre.';
-  //   }
-  // }
-
-  // Connexion avec code secret
-
-
   // Empêche la saisie de tout autre caractère que des chiffres
   allowOnlyNumbers(event: KeyboardEvent): void {
     const allowedKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'];
@@ -434,45 +401,30 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-
-
-
-
   onLoginWithEmail() {
-    this.errorMessage = ''; // Réinitialise le message d'erreur
-  if (!this.email || !this.password) {
-    this.errorMessage = 'Veuillez entrer un email et un mot de passe.';
-    return;
-  }
-
-  this.isLoading = true;
-  this.userService.loginWithEmail(this.email, this.password).subscribe({
-    next: (response) => {
-      console.log('Réponse API :', response);
-
-      this.isLoading = false;
-
-      // Vérifie et utilise le rôle retourné par le backend
-      if (response.user.role === 'admin') {
-        this.router.navigate(['/admin']);
-      } else if (response.user.role === 'user') {
-        this.router.navigate(['/user']);
-      } else {
-        this.errorMessage = 'Rôle utilisateur inconnu. Contactez l\'administrateur.';
+    if (!this.email || !this.password) {
+      this.errorMessage = 'Veuillez entrer un email et un mot de passe.';
+      return;
+    }
+  
+    this.isLoading = true;
+    this.userService.loginWithEmail(this.email, this.password).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        // Redirige en fonction du rôle
+        if (response.user.role === 'admin') {
+          this.router.navigate(['/admin']);
+        } else if (response.user.role === 'user') {
+          this.router.navigate(['/user']);
+        } else {
+          this.errorMessage = 'Rôle inconnu. Veuillez contacter l\'administrateur.';
+        }
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessage = error.message || 'Une erreur est survenue.';
       }
-    },
-    error: (error) => {
-      console.error('Erreur API :', error);
-
-      this.isLoading = false;
-      if (error.status === 401 || error.status === 404) {
-        this.errorMessage = 'Email ou mot de passe incorrect.';
-      } else if (error.status === 400) {
-        this.errorMessage = 'Requête invalide. Veuillez vérifier les champs.';
-      } else {
-        this.errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-      }
-    },
-  });
+    });
   }
+  
 }

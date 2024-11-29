@@ -11,9 +11,9 @@ export class AuthService {
   private isAdminUser: boolean = false;
 
   // Méthode pour vérifier si l'email existe
-  checkEmailExistence(email: string): Promise<any> {
-    return axios.post('/auth/check-email', { email });
-  }
+    checkEmailExistence(email: string): Promise<any> {
+      return axios.post('/auth/check-email', { email });
+    }
 
   // Méthode de connexion
   login(email?: string, password?: string, secretCode?: string): Observable<any> {

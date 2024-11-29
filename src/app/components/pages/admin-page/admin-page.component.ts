@@ -62,12 +62,12 @@ export class AdminPageComponent implements OnInit{
   fetchLastDayData(): void {
     this.capteurDataService.getLastDayData().subscribe({
       next: (response) => {
-        console.log('Réponse API :', response);  // Pour vérifier la structure des données
+        // console.log('Réponse API :', response);  // Pour vérifier la structure des données
         this.temperatureData = response.data;
 
         // Affiche les heures retournées pour vérifier qu'elles sont bien formatées
         this.temperatureData.forEach((data) => {
-          console.log('Heure retournée:', data.heure);
+          // console.log('Heure retournée:', data.heure);
         });
       },
       error: (error) => {
@@ -79,11 +79,11 @@ export class AdminPageComponent implements OnInit{
 
   getTemperatureAt(heure: string): string {
     const formattedHeure = heure.slice(0, 5); // Transforme l'heure au format "HH:mm"
-    console.log('Heure formatée à rechercher:', formattedHeure);  // Affiche l'heure recherchée
+    // console.log('Heure formatée à rechercher:', formattedHeure);  // Affiche l'heure recherchée
 
     const data = this.temperatureData.find((d) => {
       const formattedDataHeure = d.heure.slice(0, 5); // Formate la donnée de l'heure pour comparaison
-      console.log('Comparaison entre', formattedHeure, 'et', formattedDataHeure);  // Compare les heures
+      // console.log('Comparaison entre', formattedHeure, 'et', formattedDataHeure);  // Compare les heures
       return formattedDataHeure === formattedHeure;
     });
 
@@ -92,11 +92,11 @@ export class AdminPageComponent implements OnInit{
 
   getHumiditeAt(heure: string): string {
     const formattedHeure = heure.slice(0, 5); // Transforme l'heure au format "HH:mm"
-    console.log('Heure formatée à rechercher pour humidité:', formattedHeure);  // Affiche l'heure recherchée
+    // console.log('Heure formatée à rechercher pour humidité:', formattedHeure);  // Affiche l'heure recherchée
 
     const data = this.temperatureData.find((d) => {
       const formattedDataHeure = d.heure.slice(0, 5); // Formate la donnée de l'heure pour comparaison
-      console.log('Comparaison entre', formattedHeure, 'et', formattedDataHeure);  // Compare les heures
+      // console.log('Comparaison entre', formattedHeure, 'et', formattedDataHeure);  // Compare les heures
       return formattedDataHeure === formattedHeure;
     });
 

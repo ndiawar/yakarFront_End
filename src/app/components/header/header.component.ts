@@ -129,9 +129,13 @@ export class HeaderComponent implements OnInit {
   // Soumettre le formulaire de changement de mot de passe
   onSubmit(): void {
     if (this.changePasswordForm.valid && this.passwordsMatch) {
-      const { currentPassword, newPassword } = this.changePasswordForm.value;
-
-      this.userService.changePassword(currentPassword, newPassword).subscribe({
+      const { currentPassword, newPassword, confirmPassword } = this.changePasswordForm.value;
+  
+      // Vérifiez si l'email de l'utilisateur est présent (vous pourriez avoir à adapter cette partie)
+      const email = this.user.email; // Assurez-vous que l'email est bien dans `this.user`
+  
+      // Appel de la méthode changePassword avec 4 arguments
+      this.userService.changePassword(email, currentPassword, newPassword, confirmPassword).subscribe({
         next: () => {
           this.setChangePasswordMessage('Mot de passe changé avec succès.', 'success');
           this.closePasswordModalAndShowProfileModal();
@@ -146,6 +150,7 @@ export class HeaderComponent implements OnInit {
       });
     }
   }
+  
 
   // Méthode pour définir le message
   private setChangePasswordMessage(text: string, type: 'success' | 'error'): void {
@@ -177,5 +182,7 @@ export class HeaderComponent implements OnInit {
       this.isModalVisible = true; // Afficher le modal de profil après un délai
     }, 300); // Ajuster la durée selon l'animation
   }
-
+  logout(): void {
+    this.userService.logout();
+  }
 }

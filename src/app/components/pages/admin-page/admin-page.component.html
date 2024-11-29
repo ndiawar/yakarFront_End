@@ -93,7 +93,7 @@
 
                                     <div>
                                       <label class="switch">
-                                        <input type="checkbox" [(ngModel)]="fanStatus" (change)="onFanToggle($event)">
+                                        <input type="checkbox" [(ngModel)]="fanStatus" aria-label="checkbox" (change)="onFanToggle($event)">
                                         <span class="slider"></span>
                                       </label>
                                       <p>{{ fanStatus ? 'Ventilateur allumé' : 'Ventilateur éteint' }}</p>
