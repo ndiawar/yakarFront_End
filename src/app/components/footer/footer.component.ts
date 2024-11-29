@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';  // Importation de CommonModule
   standalone: true,
   imports: [CommonModule],  // Ajouter CommonModule dans les imports
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
   

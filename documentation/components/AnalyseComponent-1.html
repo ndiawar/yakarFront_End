@@ -1,0 +1,1380 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>yakar-front documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">yakar-front documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AnalyseComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/pages/user-page/analyse/analyse.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-analyse</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>HttpClientModule</code>
+                            <code>FormsModule</code>
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./analyse.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./analyse.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#capteurDataList" >capteurDataList</a>
+                            </li>
+                            <li>
+                                <a href="#chart" >chart</a>
+                            </li>
+                            <li>
+                                <a href="#groupedData" >groupedData</a>
+                            </li>
+                            <li>
+                                <a href="#limit" >limit</a>
+                            </li>
+                            <li>
+                                <a href="#page" >page</a>
+                            </li>
+                            <li>
+                                <a href="#selectedMonth" >selectedMonth</a>
+                            </li>
+                            <li>
+                                <a href="#selectedWeek" >selectedWeek</a>
+                            </li>
+                            <li>
+                                <a href="#selectedYear" >selectedYear</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#createChart" >createChart</a>
+                            </li>
+                            <li>
+                                <a href="#groupByDateAndHour" >groupByDateAndHour</a>
+                            </li>
+                            <li>
+                                <a href="#loadData" >loadData</a>
+                            </li>
+                            <li>
+                                <a href="#nextPage" >nextPage</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewInit" >ngAfterViewInit</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#previousPage" >previousPage</a>
+                            </li>
+                            <li>
+                                <a href="#updateChart" >updateChart</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, capteurDataService: <a href="../injectables/CapteurDataService.html" target="_self">CapteurDataService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:32</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>capteurDataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/CapteurDataService.html" target="_self" >CapteurDataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createChart"></a>
+                    <span class="name">
+                        <span ><b>createChart</b></span>
+                        <a href="#createChart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createChart(avgTemperatures: number[], avgHumidites: number[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>avgTemperatures</td>
+                                            <td>
+                                                        <code>number[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>avgHumidites</td>
+                                            <td>
+                                                        <code>number[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupByDateAndHour"></a>
+                    <span class="name">
+                        <span ><b>groupByDateAndHour</b></span>
+                        <a href="#groupByDateAndHour"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>groupByDateAndHour()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadData"></a>
+                    <span class="name">
+                        <span ><b>loadData</b></span>
+                        <a href="#loadData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nextPage"></a>
+                    <span class="name">
+                        <span ><b>nextPage</b></span>
+                        <a href="#nextPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>nextPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="159"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:159</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewInit"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewInit</b></span>
+                        <a href="#ngAfterViewInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousPage"></a>
+                    <span class="name">
+                        <span ><b>previousPage</b></span>
+                        <a href="#previousPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>previousPage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateChart"></a>
+                    <span class="name">
+                        <span ><b>updateChart</b></span>
+                        <a href="#updateChart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateChart()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="capteurDataList"></a>
+                    <span class="name">
+                        <span ><b>capteurDataList</b></span>
+                        <a href="#capteurDataList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chart"></a>
+                    <span class="name">
+                        <span ><b>chart</b></span>
+                        <a href="#chart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupedData"></a>
+                    <span class="name">
+                        <span ><b>groupedData</b></span>
+                        <a href="#groupedData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="limit"></a>
+                    <span class="name">
+                        <span ><b>limit</b></span>
+                        <a href="#limit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="page"></a>
+                    <span class="name">
+                        <span ><b>page</b></span>
+                        <a href="#page"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedMonth"></a>
+                    <span class="name">
+                        <span ><b>selectedMonth</b></span>
+                        <a href="#selectedMonth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Date().getMonth() + 1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedWeek"></a>
+                    <span class="name">
+                        <span ><b>selectedWeek</b></span>
+                        <a href="#selectedWeek"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedYear"></a>
+                    <span class="name">
+                        <span ><b>selectedYear</b></span>
+                        <a href="#selectedYear"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Date().getFullYear()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/pages/user-page/analyse/analyse.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { HttpClientModule, HttpClient } from &#x27;@angular/common/http&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Chart } from &#x27;chart.js/auto&#x27;;
+import { CapteurDataService } from &#x27;../../../../services/capteur-data.service&#x27;;
+
+interface CapteurData {
+  date: string;
+  heure: string;
+  temperature: number | null;
+  humidite: number | null;
+}
+
+
+@Component({
+  selector: &#x27;app-analyse&#x27;,
+  standalone: true,
+  imports: [HttpClientModule, FormsModule, CommonModule],
+  templateUrl: &#x27;./analyse.component.html&#x27;,
+  styleUrls: [&#x27;./analyse.component.css&#x27;],
+})
+export class AnalyseComponent implements OnInit {
+  selectedYear: number &#x3D; new Date().getFullYear();
+  selectedMonth: number &#x3D; new Date().getMonth() + 1;
+  selectedWeek: number &#x3D; 1;
+  capteurDataList: any[] &#x3D; [];
+  groupedData: { date: string; heure: string; temperature: number | null; humidite: number | null }[] &#x3D; [];
+  page: number &#x3D; 1;
+  limit: number &#x3D; 5;
+
+  chart: any;
+
+  constructor(private http: HttpClient, private capteurDataService: CapteurDataService) {}
+
+  ngOnInit(): void {
+    this.loadData();
+    this.updateChart(); // On met à jour le graphique lors du chargement du composant
+  }
+
+  ngAfterViewInit(): void {
+    // Cette fonction garantit que le DOM est prêt avant de tenter d&#x27;accéder à l&#x27;élément canvas
+    if (typeof window !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; typeof document !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      this.createChart([], []); // Initialisation vide avant la récupération des données
+    }
+  }
+
+  // Fonction pour mettre à jour le graphique avec les sélections de l&#x27;utilisateur
+  updateChart(): void {
+    const payload &#x3D; {
+      year: this.selectedYear,
+      month: this.selectedMonth,
+      week: this.selectedWeek,
+    };
+
+    // Requête API pour récupérer les données de la semaine
+    this.http
+      .post(&#x27;http://localhost:5001/api/capteurs/weekly-average&#x27;, payload)
+      .subscribe({
+        next: (data: any) &#x3D;&gt; {
+          console.log(&#x27;Données de l\&#x27;API :&#x27;, data);  // Debugging des données
+          const avgTemperatures &#x3D; data.avgTemperatures || [];
+          const avgHumidites &#x3D; data.avgHumidites || [];
+          // Création du graphique avec les données récupérées
+          if (typeof window !&#x3D;&#x3D; &#x27;undefined&#x27; &amp;&amp; typeof document !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+            this.createChart(avgTemperatures, avgHumidites);
+          }
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Erreur lors de la récupération des données :&#x27;, err);
+        },
+      });
+  }
+
+  // Fonction pour créer et afficher le graphique avec Chart.js
+  createChart(avgTemperatures: number[], avgHumidites: number[]): void {
+    // Si un graphique existe déjà, on le détruit pour éviter les doublons
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    // Récupération de l&#x27;élément canvas dans le DOM
+    const ctx &#x3D; document.getElementById(&#x27;chartCanvas&#x27;) as HTMLCanvasElement;
+
+    // Création du graphique avec les températures et humidités moyennes
+    this.chart &#x3D; new Chart(ctx, {
+      type: &#x27;line&#x27;,
+      data: {
+        labels: [&#x27;Lundi&#x27;, &#x27;Mardi&#x27;, &#x27;Mercredi&#x27;, &#x27;Jeudi&#x27;, &#x27;Vendredi&#x27;, &#x27;Samedi&#x27;, &#x27;Dimanche&#x27;], // Jours de la semaine
+        datasets: [
+          {
+            label: &#x27;Température moyenne (°C)&#x27;,
+            data: avgTemperatures,
+            borderColor: &#x27;rgba(255, 99, 132, 1)&#x27;,
+            borderWidth: 2,
+            fill: false,
+          },
+          {
+            label: &#x27;Humidité moyenne (%)&#x27;,
+            data: avgHumidites,
+            borderColor: &#x27;#12692b&#x27;,
+            backgroundColor: &#x27;rgba(18, 105, 43, 0.5)&#x27;,
+            borderWidth: 2,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  }
+
+  // Charger les données avec pagination
+  loadData() {
+    this.capteurDataService.getCapteurDatas(this.page, this.limit).subscribe(
+      (response: { data: CapteurData[] }) &#x3D;&gt; {
+        this.capteurDataList &#x3D; response.data;
+        this.groupByDateAndHour();
+      },
+      (error) &#x3D;&gt; {
+        console.error(&#x27;Erreur lors du chargement des données:&#x27;, error);
+      }
+    );
+  }
+
+  groupByDateAndHour() {
+    const grouped: { [key: string]: { date: string; heure: string; temperature: number | null; humidite: number | null } } &#x3D; {};
+    this.capteurDataList.forEach((item: CapteurData) &#x3D;&gt; {
+      const key &#x3D; &#x60;${item.date}-${item.heure}&#x60;;
+      if (!grouped[key]) {
+        grouped[key] &#x3D; { date: item.date, heure: item.heure, temperature: null, humidite: null };
+      }
+      if (item.temperature !&#x3D;&#x3D; null) grouped[key].temperature &#x3D; item.temperature;
+      if (item.humidite !&#x3D;&#x3D; null) grouped[key].humidite &#x3D; item.humidite;
+    });
+
+    this.groupedData &#x3D; Object.values(grouped)
+      .filter((entry) &#x3D;&gt; entry.temperature !&#x3D;&#x3D; null &amp;&amp; entry.humidite !&#x3D;&#x3D; null)
+      .sort((a, b) &#x3D;&gt; {
+        if (a.date &gt; b.date) return -1;
+        if (a.date &lt; b.date) return 1;
+        return a.heure &gt; b.heure ? -1 : 1;
+      });
+  }
+
+  previousPage() {
+    if (this.page &gt; 1) {
+      this.page--;
+      this.loadData();
+    }
+  }
+
+  nextPage() {
+    this.page++;
+    this.loadData();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+  &lt;div class&#x3D;&quot;row&quot;&gt;
+    &lt;!-- Graphique --&gt;
+    &lt;div class&#x3D;&quot;col-md-6 bg-dark&quot;&gt;
+      &lt;!-- Carte pour les paramètres --&gt;
+      &lt;div class&#x3D;&quot;card mb-3 bg-dark text-light&quot;&gt;
+        &lt;div class&#x3D;&quot;card-header text-center text-success&quot;&gt;
+          &lt;h4&gt;Choisissez les paramètres&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-body bg-dark text-light&quot;&gt;
+          &lt;div class&#x3D;&quot;form-group text-success&quot;&gt;
+            &lt;label for&#x3D;&quot;year&quot;&gt;Année :&lt;/label&gt;
+            &lt;select id&#x3D;&quot;year&quot; [(ngModel)]&#x3D;&quot;selectedYear&quot; (change)&#x3D;&quot;updateChart()&quot; class&#x3D;&quot;form-control&quot;&gt;
+              &lt;option *ngFor&#x3D;&quot;let year of [2023, 2024, 2025]&quot;&gt;{{ year }}&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;form-group text-success&quot;&gt;
+            &lt;label for&#x3D;&quot;month&quot;&gt;Mois :&lt;/label&gt;
+            &lt;select id&#x3D;&quot;month&quot; [(ngModel)]&#x3D;&quot;selectedMonth&quot; (change)&#x3D;&quot;updateChart()&quot; class&#x3D;&quot;form-control&quot;&gt;
+              &lt;option *ngFor&#x3D;&quot;let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]&quot;&gt;{{ month }}&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;form-group text-success&quot;&gt;
+            &lt;label for&#x3D;&quot;week&quot;&gt;Semaine :&lt;/label&gt;
+            &lt;select id&#x3D;&quot;week&quot; [(ngModel)]&#x3D;&quot;selectedWeek&quot; (change)&#x3D;&quot;updateChart()&quot; class&#x3D;&quot;form-control&quot;&gt;
+              &lt;option *ngFor&#x3D;&quot;let week of [1, 2, 3, 4]&quot;&gt;{{ week }}&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Carte pour le graphique --&gt;
+      &lt;div class&#x3D;&quot;card bg-dark text-light&quot;&gt;
+        &lt;div class&#x3D;&quot;card-header text-center text-success&quot;&gt;
+          &lt;h4&gt;La température et l’humidité moyenne de la semaine&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-body&quot;&gt;
+          &lt;canvas id&#x3D;&quot;chartCanvas&quot;&gt;&lt;/canvas&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Liste des données --&gt;
+    &lt;div class&#x3D;&quot;col-md-6&quot;&gt;
+      &lt;div class&#x3D;&quot;card bg-dark text-light&quot;&gt;
+        &lt;div class&#x3D;&quot;card-header text-center text-success&quot;&gt;
+          &lt;h4&gt;Liste des données&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-body&quot;&gt;
+          &lt;div *ngIf&#x3D;&quot;groupedData.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;text-center text-success&quot;&gt;
+            Aucune donnée disponible.
+          &lt;/div&gt;
+          &lt;div class&#x3D;&quot;list-group&quot; *ngIf&#x3D;&quot;groupedData.length &gt; 0&quot;&gt;
+            &lt;p
+              *ngFor&#x3D;&quot;let data of groupedData&quot;
+              class&#x3D;&quot;list-group-item bg-dark text-success border-secondary&quot;
+            &gt;
+              &lt;span&gt;&lt;i class&#x3D;&quot;bi bi-calendar&quot;&gt;&lt;/i&gt; &lt;strong&gt;Date :&lt;/strong&gt; {{ data.date }}&lt;/span&gt;&lt;br /&gt;
+              &lt;span&gt;&lt;i class&#x3D;&quot;bi bi-clock&quot;&gt;&lt;/i&gt; &lt;strong&gt;Heure :&lt;/strong&gt; {{ data.heure }}&lt;/span&gt;&lt;br /&gt;
+              &lt;span&gt;&lt;i class&#x3D;&quot;bi bi-thermometer&quot;&gt;&lt;/i&gt; &lt;strong&gt;Température :&lt;/strong&gt; {{ data.temperature }} °C&lt;/span&gt;&lt;br /&gt;
+              &lt;span&gt;&lt;i class&#x3D;&quot;bi bi-cloud-rain&quot;&gt;&lt;/i&gt; &lt;strong&gt;Humidité :&lt;/strong&gt; {{ data.humidite }} %&lt;/span&gt;
+            &lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Pagination --&gt;
+        &lt;div class&#x3D;&quot;text-center mt-3&quot;&gt;
+          &lt;button
+            class&#x3D;&quot;btn btn-link text-success&quot;
+            title&#x3D;&quot;Page précédente&quot;
+            [disabled]&#x3D;&quot;page &lt;&#x3D; 1&quot;
+            (click)&#x3D;&quot;previousPage()&quot;
+          &gt;
+            &lt;i class&#x3D;&quot;bi bi-arrow-left&quot;&gt;&lt;/i&gt;
+          &lt;/button&gt;
+          &lt;span class&#x3D;&quot;text-success&quot;&gt;Page {{ page }}&lt;/span&gt;
+          &lt;button
+            class&#x3D;&quot;btn btn-link text-success&quot;
+            title&#x3D;&quot;Page suivante&quot;
+            [disabled]&#x3D;&quot;groupedData.length &lt; limit&quot;
+            (click)&#x3D;&quot;nextPage()&quot;
+          &gt;
+            &lt;i class&#x3D;&quot;bi bi-arrow-right&quot;&gt;&lt;/i&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./analyse.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">
+  canvas {
+    margin-top: 20px;
+    border-radius: 10px; /* Coins arrondis */
+    background-color: #1e1e1e; /* Fond du graphique */
+    color: white; /* Texte blanc */
+
+  }
+
+  .chart-container {
+    height: 400px;
+    width: 100%;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.list-group-item {
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.text-center {
+  margin-top: 20px;
+}
+
+.bg-dark {
+  background-color: #000 !important; /* Fond noir */
+}
+
+.text-success {
+  color: #28a745 !important; /* Texte vert */
+}
+
+.list-group-item.bg-dark {
+  background-color: #000 !important; /* Fond noir pour chaque élément */
+}
+
+.list-group-item.text-success,.h4 {
+  color: #28a745 !important; /* Texte vert pour chaque élément */
+}
+
+.border-secondary {
+  border-color: #6c757d !important; /* Bordure grise */
+}
+
+#graph{
+  width: 100%;
+}
+#h4{
+  color: green
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="container-fluid">  <div class="row">    <!-- Graphique -->    <div class="col-md-6 bg-dark">      <!-- Carte pour les paramètres -->      <div class="card mb-3 bg-dark text-light">        <div class="card-header text-center text-success">          <h4>Choisissez les paramètres</h4>        </div>        <div class="card-body bg-dark text-light">          <div class="form-group text-success">            <label for="year">Année :</label>            <select id="year" [(ngModel)]="selectedYear" (change)="updateChart()" class="form-control">              <option *ngFor="let year of [2023, 2024, 2025]">{{ year }}</option>            </select>          </div>          <div class="form-group text-success">            <label for="month">Mois :</label>            <select id="month" [(ngModel)]="selectedMonth" (change)="updateChart()" class="form-control">              <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">{{ month }}</option>            </select>          </div>          <div class="form-group text-success">            <label for="week">Semaine :</label>            <select id="week" [(ngModel)]="selectedWeek" (change)="updateChart()" class="form-control">              <option *ngFor="let week of [1, 2, 3, 4]">{{ week }}</option>            </select>          </div>        </div>      </div>      <!-- Carte pour le graphique -->      <div class="card bg-dark text-light">        <div class="card-header text-center text-success">          <h4>La température et l’humidité moyenne de la semaine</h4>        </div>        <div class="card-body">          <canvas id="chartCanvas"></canvas>        </div>      </div>    </div>    <!-- Liste des données -->    <div class="col-md-6">      <div class="card bg-dark text-light">        <div class="card-header text-center text-success">          <h4>Liste des données</h4>        </div>        <div class="card-body">          <div *ngIf="groupedData.length === 0" class="text-center text-success">            Aucune donnée disponible.          </div>          <div class="list-group" *ngIf="groupedData.length > 0">            <p              *ngFor="let data of groupedData"              class="list-group-item bg-dark text-success border-secondary"            >              <span><i class="bi bi-calendar"></i> <strong>Date :</strong> {{ data.date }}</span><br />              <span><i class="bi bi-clock"></i> <strong>Heure :</strong> {{ data.heure }}</span><br />              <span><i class="bi bi-thermometer"></i> <strong>Température :</strong> {{ data.temperature }} °C</span><br />              <span><i class="bi bi-cloud-rain"></i> <strong>Humidité :</strong> {{ data.humidite }} %</span>            </p>          </div>        </div>        <!-- Pagination -->        <div class="text-center mt-3">          <button            class="btn btn-link text-success"            title="Page précédente"            [disabled]="page <= 1"            (click)="previousPage()"          >            <i class="bi bi-arrow-left"></i>          </button>          <span class="text-success">Page {{ page }}</span>          <button            class="btn btn-link text-success"            title="Page suivante"            [disabled]="groupedData.length < limit"            (click)="nextPage()"          >            <i class="bi bi-arrow-right"></i>          </button>        </div>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AdminPageComponent', 'selector': 'app-admin-page'},{'name': 'AnalyseComponent', 'selector': 'app-analyse'},{'name': 'AnalyseComponent', 'selector': 'app-analyse'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'LogsComponent', 'selector': 'app-logs'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'MyAccountComponent', 'selector': 'app-my-account'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'UserPageComponent', 'selector': 'app-user-page'},{'name': 'UtilisateursComponent', 'selector': 'app-utilisateurs'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AnalyseComponent-1'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AnalyseComponent-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
